@@ -4,18 +4,19 @@ import { Input } from "@/components/ui/input";
 //import { label } from "@/components/ui/label";
 
 import { signIn } from "next-auth/react";
-import Image from "next/image";
 import Link from "next/link";
 import { FormEvent } from "react";
 import { Button } from "./ui/button";
+import { useToast } from "./ui/use-toast";
 
 interface AuthFormProps {
     type: "login"|"sign-up"|"forgot-password"
 }
 
 const AuthForm: React.FC<AuthFormProps> = ({ type }) => {
+    const { toast } = useToast();
 
-    const onSubmitHandler = (event: FormEvent<HTMLFormElement>) => {
+    const onSubmitHandler = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
         const { email, name, password } = Object.fromEntries(formData.entries());
@@ -25,6 +26,15 @@ const AuthForm: React.FC<AuthFormProps> = ({ type }) => {
                 signIn("credentials", { email, password, callbackUrl: "/home" });
                 break;
             case "sign-up":
+                await fetch("/api/users", {
+                    method: "POST",
+                    body: JSON.stringify({ name, password, email }),
+                    cache: "no-store"
+                })
+                toast({
+                    title: "Successful Sign Up",
+                    description: "Check your email to verify your account",
+                })
                 break;
             case "forgot-password":
                 break;
