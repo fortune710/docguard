@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 const SubmitDocumentButton = () => {
     const { pending } = useFormStatus()
     return (
-        <Button disabled={pending} type="submit">
+        <Button className='w-full my-5' disabled={pending} type="submit">
             Upload
         </Button>
     )
