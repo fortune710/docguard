@@ -8,7 +8,7 @@ interface User {
     name: string
 }
 
-export default async function POST(req: NextRequest) {
+export async function POST(req: NextRequest) {
     const userData = await req.json() as User;
 
     const newUser = await createUser(userData)

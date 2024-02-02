@@ -44,7 +44,7 @@ model User {
   emailVerified DateTime?
   image         String?
 
-  //password      String?
+  password      String?
   accounts      Account[]
   sessions      Session[]
 
@@ -57,9 +57,20 @@ model Document {
   title String
   description String?
   url String
+
+  issue_date DateTime?
   expiry_date DateTime?
 
   user User @relation(fields: [user_id], references: [id])
   user_id String
   createdAt DateTime @default(now())
+}
+
+model InboxMessages {
+  id String @id @default(uuid())
+  title String
+  body String
+
+  createdAt DateTime @default(now())
+
 }

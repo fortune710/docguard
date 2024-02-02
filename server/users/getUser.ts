@@ -1,13 +1,10 @@
 import { prisma } from "@/prisma"
 
 const getUser = async (email: string) => {
-    const user = await prisma.user.findUnique({
+    const user = await prisma.user.findFirst({
         where: {
             email
         },
-        select: {
-            password: false,
-        }
     })
 
     return user

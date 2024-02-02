@@ -23,7 +23,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ type }) => {
 
         switch(type) {
             case "login":
-                signIn("credentials", { email, password, callbackUrl: "/home" });
+                signIn("credentials", { email, password, redirect: false });
                 break;
             case "sign-up":
                 await fetch("/api/users", {
@@ -91,6 +91,15 @@ const AuthForm: React.FC<AuthFormProps> = ({ type }) => {
 
                 <Button className="w-full text-lg h-12">
                     Login
+                </Button>
+
+                <Button 
+                    variant="outline"
+                    className="w-full text-lg h-12"
+                    onClick={() => signIn("google", { callbackUrl: "/home" })}
+                    type="button"
+                >
+                    Sign In With Google
                 </Button>
     
             </form>
