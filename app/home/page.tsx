@@ -18,30 +18,39 @@ import { addNewDocumentAction } from "../actions";
 import SubmitDocumentButton from "@/components/submit-document-button";
 import SignOutButton from "@/components/sign-out-btn";
 import getUser from "@/server/users/getUser";
+import CategoryItemList from "@/components/category-items";
+import { Settings } from "lucide-react";
+import Link from "next/link";
 
 export default async function HomePage() {
 
     const session = await getServerSession();
-    const user = await getUser(session?.user?.email!)
-    const documents = await findUsersDocuments(user?.id!);
+    const user = await getUser(session?.user?.email!);
 
     const addNewDocument = addNewDocumentAction.bind(null, user?.id!)
 
     return (
         <main className="px-3">
-            <div className="flex items-center w-full">
-                <h1>Welcome Back, <br /> {session?.user?.name!}</h1>
+            <div className="flex items-center justify-between w-full">
+                <div>
+                    <h4 className="font-medium text-xl">Welcome Back</h4>
+                    <h1 className="font-semibold text-3xl">{session?.user?.name!}</h1>
+                </div>
+
+                <Link href="/settings">
+                    <Settings/>
+                </Link>
             </div>
 
-            {
-                documents.length === 0 ? <p>No documents</p>:
-                documents.map((document) => (
-                    <div>
-                        <p>{document.title}</p>
-                        <p>{document.description}</p>
-                    </div>
-                ))
-            }
+
+            <div className="w-full mt-4">
+                <div className="w-full flex items-center justify-between">
+                    <h3 className="font-semibold">My Uploads</h3>
+                    <Button variant="ghost">See More</Button>
+                </div>
+
+                <CategoryItemList/>
+            </div>
             
             <SignOutButton/>
 
@@ -55,7 +64,7 @@ export default async function HomePage() {
                         <DrawerTitle>Add New Document</DrawerTitle>
                     </DrawerHeader>
 
-                    <form action={addNewDocument}>
+                    <form className="px-3" action={addNewDocument}>
                         <div className="w-full">
                             <label htmlFor="title">Title</label>
                             <Input
