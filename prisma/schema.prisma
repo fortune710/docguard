@@ -52,6 +52,12 @@ model User {
   createdAt DateTime @default(now())
 }
 
+enum Category {
+  personal
+  finance
+  health
+}
+
 model Document {
   id String @id @default(uuid())
   title String
@@ -60,6 +66,8 @@ model Document {
 
   issue_date DateTime?
   expiry_date DateTime?
+
+  category Category @default(personal)
 
   user User @relation(fields: [user_id], references: [id])
   user_id String
