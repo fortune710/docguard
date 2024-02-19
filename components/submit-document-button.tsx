@@ -4,7 +4,8 @@ import { Button } from "@/components/ui/button";
 
 
 const SubmitDocumentButton = () => {
-    const { pending } = useFormStatus()
+    const { pending } = useFormStatus();
+
     return (
         <Button className='w-full my-5' disabled={pending} type="submit">
             Upload
