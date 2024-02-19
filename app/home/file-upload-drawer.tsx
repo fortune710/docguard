@@ -17,7 +17,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { addNewDocumentAction } from "../actions";
 import { useRef, useState } from "react";
-
+import { useToast } from "@/components/ui/use-toast";
 
 interface FileUploadDrawerProps {
     userId: string
@@ -26,13 +26,29 @@ interface FileUploadDrawerProps {
 export default function FileUploadDrawer({ userId }: FileUploadDrawerProps) {
     const [drawerOpen, setDrawer] = useState(false);    
     const formRef = useRef<HTMLFormElement>(null);
+    const { toast } = useToast();
 
     const addNewDocument = addNewDocumentAction.bind(null, userId);
 
     const handleFormAction = (formData: FormData) => {
-        addNewDocument(formData);
-        setDrawer(false);
-        formRef?.current?.reset();
+        addNewDocument(formData)
+        .then(() => {
+            setDrawer(false);
+            formRef?.current?.reset();
+
+            toast({
+                title: 'Upload Successful',
+                description: 'Document was uploaded sucessfully',
+            })
+
+        })
+        .catch(() => {
+            toast({
+                title: 'Error Occurred',
+                description: 'Ran into an error while trying to upload',
+                variant: 'destructive',
+            })
+        })
     }
     
     return (
@@ -46,18 +62,18 @@ export default function FileUploadDrawer({ userId }: FileUploadDrawerProps) {
                     Scan from File
                 </Button>
             </DrawerTrigger>
-
             <DrawerContent>
                 <DrawerHeader>
                     <DrawerTitle>Add New Document</DrawerTitle>
                 </DrawerHeader>
 
-                <form ref={formRef} className="px-3" action={handleFormAction}>
+                <form ref={formRef} className="px-3 flex flex-col gap-2" action={handleFormAction}>
                     <div className="w-full">
                         <label htmlFor="title">Title</label>
                         <Input
                             placeholder="eg. Birth Certificate, School ID"
                             name="title"
+                            className="mt-0.5"
                         />
                     </div>
 
@@ -66,7 +82,13 @@ export default function FileUploadDrawer({ userId }: FileUploadDrawerProps) {
                         <Textarea
                             placeholder="Information about the document, like who it belongs to, etc"
                             name="description"
+                            className="mt-0.5"
                         />
+                    </div>
+
+                    <div>
+                        <label htmlFor="category">Category</label>
+                        <CategorySelect/>
                     </div>
 
                     <div>
@@ -75,13 +97,10 @@ export default function FileUploadDrawer({ userId }: FileUploadDrawerProps) {
                             placeholder="Upload File of Document"
                             name="file"
                             type="file"
+                            className="mt-0.5"
                         />
                     </div>
 
-                    <div>
-                        <label htmlFor="category">Category</label>
-                        <CategorySelect/>
-                    </div>
 
                     <div>
                         <label htmlFor="expiry_date">Expiry Date</label>
