@@ -1,4 +1,4 @@
-import { prisma } from "@/prisma"
+import prisma from "@/lib/prisma"
 
 const findUsersDocuments = async (user_id: string) => {
     const documents = await prisma.document.findMany({
