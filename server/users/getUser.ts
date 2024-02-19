@@ -1,13 +1,14 @@
 import { prisma } from "@/prisma"
+import { cache } from "react";
 
-const getUser = async (email: string) => {
+
+
+const getUser = cache(async (email: string) => {
     const user = await prisma.user.findFirst({
-        where: {
-            email
-        },
+        where: { email },
     })
 
     return user
-}
+})
 
 export default getUser;
