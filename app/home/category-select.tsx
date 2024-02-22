@@ -11,7 +11,10 @@ const CategorySelect: React.FC = () => {
             <SelectContent>
                 {
                     Categories.map((category) => (
-                        <SelectItem value={category.name}>
+                        <SelectItem 
+                            key={category.name} 
+                            value={category.name}
+                        >
                             {category.label}
                         </SelectItem>
                     ))

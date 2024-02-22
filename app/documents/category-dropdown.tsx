@@ -33,7 +33,8 @@ const CategoryDropdown: React.FC = () => {
                 </DropdownMenuCheckboxItem>
                 {
                     Categories.map(({ name, label }) => (
-                    <DropdownMenuCheckboxItem 
+                    <DropdownMenuCheckboxItem
+                        key={name}
                         onClick={() => setCategory(name)}
                         checked={category === name}
                     >
