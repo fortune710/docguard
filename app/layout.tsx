@@ -26,14 +26,8 @@ export default function RootLayout({
     <QueryParamProvider>
       <html lang="en">
         <body className={inter.className}>{children}</body>
-        {
-          /*
-          
-          <Toaster/>
-          
-          */
-         <PWALoader/>
-        }
+        <Toaster/>
+        <PWALoader/>
       </html>
     </QueryParamProvider>
   )
