@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function LoginPage() {
     return (
-        <main className="px-3 mt-5">
+        <main className="px-3 mt-5 md:mx-auto md:mt-7 lg:mt-10 md:w-2/3 lg:w-1/3">
             <div className="flex flex-col items-center gap-1 my-4">
                 <Image
                     src={"/docguard.png"}
