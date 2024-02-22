@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 export default function Hero() {
     return (
-    <section className='text-center font-inter items-center flex flex-col gap-6 text-gray-900 pt-16 md:pt-20 lg:pt-24'>
+    <section className='text-center px-4 font-inter items-center flex flex-col gap-6 text-gray-900 pt-16 md:pt-20 lg:pt-24'>
         <h1 className='text-5xl animate-slide-up-300 opacity-0 font-semibold font-ppmori'>
           No more paper documents<br/> in a briefcase
         </h1>
