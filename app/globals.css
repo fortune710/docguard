@@ -33,6 +33,8 @@
     --ring: 240 10% 3.9%;
  
     --radius: 0.5rem;
+
+    --font-ppmori: 'PP-Mori'
   }
  
   .dark {
@@ -73,4 +75,10 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+@font-face {
+  src: url('../public/fonts/PPMori-SemiBold.otf');
+  font-family: 'PP-Mori';
+  font-weight: 600;
 }
