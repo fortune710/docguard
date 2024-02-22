@@ -8,6 +8,7 @@ import Link from "next/link";
 import { FormEvent } from "react";
 import { Button } from "./ui/button";
 import { useToast } from "./ui/use-toast";
+import { FaGoogle } from "react-icons/fa6";
 
 interface AuthFormProps {
     type: "login"|"sign-up"|"forgot-password"
@@ -95,10 +96,11 @@ const AuthForm: React.FC<AuthFormProps> = ({ type }) => {
 
                 <Button 
                     variant="outline"
-                    className="w-full text-lg h-12"
+                    className="w-full text-lg h-12 gap-3"
                     onClick={() => signIn("google", { callbackUrl: "/home" })}
                     type="button"
                 >
+                    <FaGoogle/>
                     Sign In With Google
                 </Button>
     
