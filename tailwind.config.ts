@@ -18,6 +18,10 @@ const config = {
       },
     },
     extend: {
+      fontFamily: {
+        inter: 'var(--font-inter)',
+        ppmori: 'var(--font-ppmori)'
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
