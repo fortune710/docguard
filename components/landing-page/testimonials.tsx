@@ -3,7 +3,7 @@ export default function Testimonials () {
         <section className="bg-white">
             <div className="mx-auto max-w-screen-xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
                 <h2 className="text-center text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-                    Read trusted reviews from our customers
+                    Read trusted reviews from our users
                 </h2>
 
                 <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-8">
