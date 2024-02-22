@@ -5,7 +5,11 @@ import './globals.css'
 import PWALoader from './pwa-loader'
 import QueryParamProvider from './query-param-provider'
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ 
+  subsets: ['latin'], 
+  weight: ['300', '400', '500', '600', '700', '800'],
+  variable: '--font-inter' 
+})
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -22,8 +26,14 @@ export default function RootLayout({
     <QueryParamProvider>
       <html lang="en">
         <body className={inter.className}>{children}</body>
-        <Toaster/>
-        <PWALoader/>
+        {
+          /*
+          
+          <Toaster/>
+          
+          */
+         <PWALoader/>
+        }
       </html>
     </QueryParamProvider>
   )
