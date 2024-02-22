@@ -1,14 +1,11 @@
 import { getServerSession } from "next-auth";
 import findUsersDocuments from "@/server/documents/findUsersDocuments";
 import getUser from "@/server/users/getUser";
-import { FaCaretDown, FaChevronLeft, FaChevronRight } from "react-icons/fa6";
-import { Button } from "@/components/ui/button";
+import { FaChevronRight } from "react-icons/fa6";
 import { Input } from "@/components/ui/input";
 import CategoryDropdown from "./category-dropdown";
 import BackButton from "@/components/back-button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import Link from "next/link";
-import getFile from "@/services/s3/getFile";
 import DocumentLink from "./document-link";
 import findUsersDocumentCategory from "@/server/documents/findUserDocumentCategory";
 
@@ -20,8 +17,6 @@ export default async function DocumentsPage({ searchParams }: { searchParams: Re
     await findUsersDocuments(user?.id!) : 
     await findUsersDocumentCategory(user?.id!, searchParams.filter);
     
-
-
 
     return (
         <main className="px-3 pt-6">
@@ -42,8 +37,6 @@ export default async function DocumentsPage({ searchParams }: { searchParams: Re
                 {
                     documents.length === 0 ? <p>No documents</p>:
                     documents.map((document) => {
-
-
                         return (
                             <li key={document.id} className="py-3 border-b border-slate-300">
                                 <Collapsible>
