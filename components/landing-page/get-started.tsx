@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function GetStartedSection() {
     return (
         <section className="py-24 sm:py-32 grid grid-cols-1 place-items-center">
-            <div className="bg-blue-600 text-white text-center rounded-2xl w-5/6 p-6 lg:py-10 mx-auto">
+            <div className="bg-blue-600 text-white animate-slide-down opacity- text-center rounded-2xl w-5/6 p-6 lg:py-10 mx-auto">
                 <h1 className="font-ppmori text-3xl font-semibold">
                     Join for free today
                 </h1>
