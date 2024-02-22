@@ -5,12 +5,12 @@ import Link from "next/link";
 import { Categories, ICategoryItem } from "@/utils/categories"; 
 
 
-const CategoryItem: React.FC<Omit<ICategoryItem, 'name'>> = ({ label, icon, href }) => {
+const CategoryItem: React.FC<Omit<ICategoryItem, 'name'>> = ({ label, href, ...rest }) => {
     return (
         <li>
             <Link className="text-center w-full h-full" href={href}>
                 <div className="w-16 h-16 flex items-center justify-center rounded-lg bg-slate-300">
-                    <>{icon}</>
+                    <rest.icon/>
                 </div>
                 <p>{label}</p>
             </Link>
