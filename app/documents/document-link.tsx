@@ -20,6 +20,7 @@ export default function DocumentLink({ fileKey }: DocumentLinkProps) {
     return (
         <div className="flex items-center justify-between w-full">
             <Button 
+                variant='ghost'
                 className="font-semibold" 
                 onClick={openDocument}
             >
