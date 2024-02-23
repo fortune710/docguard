@@ -54,7 +54,6 @@ const handler = NextAuth({
             return token
         },
         session: async ({ token, session }) => {
-            console.log(token, session, "in session callback")
             
             return {
                 ...session,
@@ -65,7 +64,6 @@ const handler = NextAuth({
             }
         },
         signIn: async ({ user }) => {
-            console.log(user)
             return true
         }
     },
