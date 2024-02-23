@@ -24,7 +24,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ type }) => {
 
         switch(type) {
             case "login":
-                signIn("credentials", { email, password, redirect: false });
+                signIn("credentials", { email, password, callbackUrl: '/home' });
                 break;
             case "sign-up":
                 await fetch("/api/users", {
