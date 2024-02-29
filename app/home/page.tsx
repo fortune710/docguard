@@ -1,16 +1,16 @@
 import { getServerSession } from "next-auth";
-import findUsersDocuments from "@/server/documents/findUsersDocuments";
 
-import { Button } from "@/components/ui/button";
 import SignOutButton from "@/components/sign-out-btn";
 import CategoryItemList from "@/components/category-items";
 import { Settings } from "lucide-react";
 import Link from "next/link";
+import getUser from "@/server/users/getUser";
+import NewCardButton from "./new-card-button";
 
 export default async function HomePage() {
 
     const session = await getServerSession();
-
+    const user = await getUser(session?.user.email!)
 
     return (
         <main className="px-3">
@@ -25,6 +25,15 @@ export default async function HomePage() {
                 </Link>
             </div>
 
+            <div className="w-full mt-4">
+                <div className="w-full flex items-center justify-between mb-1">
+                    <h3 className="font-semibold">My Cards</h3>
+                    <Link href='/documents?filter=all'>See More</Link>
+                </div>
+
+                <NewCardButton userId={user?.id!}/>
+
+            </div>
 
             <div className="w-full mt-4">
                 <div className="w-full flex items-center justify-between">

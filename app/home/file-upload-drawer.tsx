@@ -14,19 +14,22 @@ import CategorySelect from "./category-select";
 import SubmitDocumentButton from "@/components/submit-document-button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
 import { addNewDocumentAction } from "../actions";
 import { useRef, useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
+import { useQueryParam, withDefault, StringParam } from "use-query-params";
 
 interface FileUploadDrawerProps {
-    userId: string
+    userId: string,
+    uploadFileButton: React.ReactNode
 }
 
-export default function FileUploadDrawer({ userId }: FileUploadDrawerProps) {
+export default function FileUploadDrawer({ userId, uploadFileButton }: FileUploadDrawerProps) {
     const [drawerOpen, setDrawer] = useState(false);    
     const formRef = useRef<HTMLFormElement>(null);
     const { toast } = useToast();
+    const [isCard, setIsCard] = useQueryParam('is_card', withDefault(StringParam, null, true))
+
 
     const addNewDocument = addNewDocumentAction.bind(null, userId);
 
@@ -50,17 +53,20 @@ export default function FileUploadDrawer({ userId }: FileUploadDrawerProps) {
             })
         })
     }
+
+    const drawerClose = () => {
+        setIsCard(null)
+        setDrawer(false)
+    }
     
     return (
         <Drawer 
             open={drawerOpen} 
             onOpenChange={(isOpen) => setDrawer(isOpen)}
-            onClose={() => setDrawer(false)}
+            onClose={drawerClose}
         >
             <DrawerTrigger asChild>
-                <Button className="w-full rounded-lg">
-                    Scan from File
-                </Button>
+                { uploadFileButton }
             </DrawerTrigger>
             <DrawerContent>
                 <DrawerHeader>
@@ -99,6 +105,16 @@ export default function FileUploadDrawer({ userId }: FileUploadDrawerProps) {
                             type="file"
                             className="mt-0.5"
                         />
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                        <Input
+                            name="is_card"
+                            type="checkbox"
+                            className="w-3 h-3"
+                            checked={!!isCard}
+                        />
+                        <label htmlFor="is_card">If Document is a card, click this</label>
                     </div>
 
 
