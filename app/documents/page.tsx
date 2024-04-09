@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import CategoryDropdown from "./category-dropdown";
 import BackButton from "@/components/back-button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import DocumentLink from "./document-link";
+import { DocumentLink } from "./document-link";
 import findUsersDocumentCategory from "@/server/documents/findUserDocumentCategory";
 
 

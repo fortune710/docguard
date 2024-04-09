@@ -1,31 +1,31 @@
-'use client'
+
 import { Button } from "@/components/ui/button";
-import getFile from "@/services/s3/getFile";
+import getFile from "@/services/gcp-storage/getFile";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 interface DocumentLinkProps {
-    fileKey: string
+    fileKey: string,
 }
 
+export const revalidate = 5 * 60 //every 5 minutes
 
-export default function DocumentLink({ fileKey }: DocumentLinkProps) {
+
+export async function DocumentLink({ fileKey }: DocumentLinkProps) {
     
-    const router = useRouter();
-
-    const openDocument = async () => {
-        const url = await getFile(fileKey);
-        router.push(url);
-    }
+    const url = await getFile(fileKey);
 
     return (
         <div className="flex items-center justify-between w-full">
-            <Button 
-                variant='ghost'
-                className="font-semibold" 
-                onClick={openDocument}
-            >
-                View Document
-            </Button>
+            <Link href={url} target="_blank">
+                <Button 
+                    variant='ghost'
+                    className="font-semibold" 
+                    //onClick={openDocument}
+                >
+                    View Document
+                </Button>
+            </Link>
 
             <Button variant={'ghost'} disabled>
                 Get QR Code
