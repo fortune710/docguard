@@ -40,3 +40,7 @@ next-env.d.ts
 
 #terraform
 .terraform
+
+
+#Google Cloud Creentials
+docguard-service-key.json
