@@ -11,7 +11,7 @@ const BackButton: React.FC = () => {
         <Button 
             variant={"ghost"} 
             onClick={() => router.back()}
-            className="border p-1 border-slate-300 rounded-lg aspect-square"
+            className="border p-1 border-slate-300 md:hidden rounded-lg aspect-square"
         >
             <ChevronLeft className="w-5 h-5" />        
         </Button>
