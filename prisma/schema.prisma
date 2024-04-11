@@ -53,6 +53,7 @@ model Document {
   description String?
   file_key         String
   issue_date  DateTime?
+  is_card Boolean @default(false)
   expiry_date DateTime?
   category    Category @default(personal)
   user_id     String
