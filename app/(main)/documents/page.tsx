@@ -1,13 +1,11 @@
 import { getServerSession } from "next-auth";
 import findUsersDocuments from "@/server/documents/findUsersDocuments";
 import getUser from "@/server/users/getUser";
-import { FaChevronRight } from "react-icons/fa6";
 import { Input } from "@/components/ui/input";
 import CategoryDropdown from "./category-dropdown";
 import BackButton from "@/components/back-button";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { DocumentLink } from "./document-link";
 import findUsersDocumentCategory from "@/server/documents/findUserDocumentCategory";
+import DocumentsLayout from "./documents-layout";
 
 
 export default async function DocumentsPage({ searchParams }: { searchParams: Record<'filter',string> }) {
@@ -25,42 +23,14 @@ export default async function DocumentsPage({ searchParams }: { searchParams: Re
                 <CategoryDropdown/>
             </div>
 
-            <p className="mt-3">Listed by Upload Date</p>
+            <p className="mt-3 md:hidden">Listed by Upload Date</p>
 
             <Input
                 type="search"
                 placeholder="Search for anything"
-                className="mt-3"
+                className="mt-3 md:hidden"
             />
-
-            <ul>
-                {
-                    documents.length === 0 ? <p>No documents</p>:
-                    documents.map((document) => {
-                        return (
-                            <li key={document.id} className="py-3 border-b border-slate-300">
-                                <Collapsible>
-                                    <CollapsibleTrigger asChild>
-                                        <button className="w-full text-left">
-                                            <div className="flex font-semibold items-center justify-between">
-                                                <p>{document.title}</p>
-                                                <FaChevronRight />
-                                            </div>
-                                            <p>{document.description}</p>                                
-                                        </button>
-                                    </CollapsibleTrigger>
-
-                                    <CollapsibleContent>
-                                        <DocumentLink fileKey={document.file_key} />
-                                    </CollapsibleContent>
-                                </Collapsible>
-                            </li>
-                        )
-                    })
-                }
-
-            </ul>
-
+            <DocumentsLayout documents={documents} /> 
             
         </main>
     )
