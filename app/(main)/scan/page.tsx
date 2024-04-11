@@ -9,7 +9,7 @@ import SubmitDocumentButton from "@/components/submit-document-button";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { useQueryParam, withDefault, StringParam } from "use-query-params";
-import { addNewDocumentAction } from "../actions";
+import { addNewDocumentAction } from "@/app/actions";
 import CategorySelect from "../home/category-select";
 import { useSearchParams } from "next/navigation";
 
