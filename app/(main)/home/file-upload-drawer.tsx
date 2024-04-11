@@ -21,7 +21,7 @@ import { useQueryParam, withDefault, StringParam } from "use-query-params";
 
 interface FileUploadDrawerProps {
     userId: string,
-    uploadFileButton: React.ReactNode
+    uploadFileButton?: React.ReactNode
 }
 
 export default function FileUploadDrawer({ userId, uploadFileButton }: FileUploadDrawerProps) {
