@@ -2,7 +2,7 @@
 import getUser from "@/server/users/getUser";
 import { getServerSession } from "next-auth";
 import FileUploadDrawer from "./file-upload-drawer";
-import { Button } from "@/components/ui/button";
+import UploadNewFile from "./upload-file-button";
 
 
 
@@ -16,9 +16,7 @@ async function FileUpload() {
         <FileUploadDrawer 
             userId={user?.id!}
             uploadFileButton={
-                <Button className="w-full rounded-lg">
-                    Scan from File
-                </Button>
+                <UploadNewFile/>
             }    
         />
     )
