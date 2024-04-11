@@ -6,24 +6,19 @@ import {
     DrawerTitle,
     DrawerHeader, 
     DrawerDescription,
-    DrawerClose
 } from "@/components/ui/drawer"; 
 import { TbLineScan } from "react-icons/tb";
-import { Camera, CameraResultType, CameraSource } from "@capacitor/camera";
-import { useRef } from "react";
 import FileUpload from "./file-upload";
+import getUser from "@/server/users/getUser";
+import { getServerSession } from "next-auth";
+import Link from "next/link";
 
-const ScanButton = () => {
+const ScanButton = async () => {
 
-    //const drawerRef = useRef<typeof DrawerTrigger>(null);
+    const session = await getServerSession();
+    const user = await getUser(session?.user?.email!);
 
-    const scanAsImage = async () => {
-        return await Camera.getPhoto({
-            source: CameraSource.Prompt,
-            quality: 100,
-            resultType: CameraResultType.DataUrl
-        })
-    }
+
 
 
     return (
@@ -42,9 +37,15 @@ const ScanButton = () => {
                     </DrawerDescription>
                 </DrawerHeader>
                 <div className="px-3 flex flex-col gap-4 mt-4 mb-10">
-                    <Button variant={"ghost"} className="w-full rounded-lg">
-                        Scan from Image
-                    </Button>
+                    <Link href={`/scan?user_id=${user?.id}`}>
+                        <Button 
+                            variant={"ghost"} 
+                            className="w-full rounded-lg"
+                        >
+                            Scan from Image
+                        </Button>
+                    </Link>
+
                     <FileUpload/>
                 </div>
             </DrawerContent>
