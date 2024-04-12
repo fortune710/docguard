@@ -7,7 +7,7 @@ const SubmitDocumentButton = () => {
     const { pending } = useFormStatus();
 
     return (
-        <Button className='w-full my-5' disabled={pending} type="submit">
+        <Button className='w-full my-5 md:w-auto md:my-0' disabled={pending} type="submit">
             Upload
         </Button>
     )
