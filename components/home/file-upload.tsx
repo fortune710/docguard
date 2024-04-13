@@ -2,7 +2,7 @@
 import getUser from "@/server/users/getUser";
 import { getServerSession } from "next-auth";
 import FileUploadDrawer from "./file-upload-drawer";
-import UploadNewFile from "./upload-file-button";
+import UploadNewFile from "../../app/(main)/home/upload-file-button";
 
 
 

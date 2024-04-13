@@ -2,10 +2,9 @@
 
 import { Documents } from "@/server/types"
 import DocumentsTable from "./documents-table"
-import { useMediaQuery } from "@/hooks/useMediaQuery"
 
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { DocumentLink } from "./document-link";
+import { DocumentLink } from "@/components/documents/document-link";
 import { FaChevronRight } from "react-icons/fa6";
 
 
