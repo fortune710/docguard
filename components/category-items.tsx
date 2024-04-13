@@ -9,7 +9,7 @@ const CategoryItem: React.FC<Omit<ICategoryItem, 'name'>> = ({ label, href, ...r
     return (
         <li>
             <Link className="text-center w-full h-full" href={href}>
-                <div className="w-16 h-16 flex items-center justify-center rounded-lg bg-slate-300">
+                <div className="flex items-center justify-center rounded-lg bg-white shadow border border-muted h-20 w-20">
                     <rest.icon/>
                 </div>
                 <p>{label}</p>
@@ -20,7 +20,7 @@ const CategoryItem: React.FC<Omit<ICategoryItem, 'name'>> = ({ label, href, ...r
 
 const CategoryItemList = () => {
     return (
-        <ul className="flex items-center gap-2">
+        <ul className="flex items-center gap-3">
             {
                 Categories.map((category) => (
                     <CategoryItem
