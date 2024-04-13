@@ -10,11 +10,11 @@ import {
     DrawerTrigger,
     DrawerDescription
 } from "@/components/ui/drawer";
-import CategorySelect from "./category-select";
+import CategorySelect from "../../app/(main)/home/category-select";
 import SubmitDocumentButton from "@/components/submit-document-button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { addNewDocumentAction } from "../../actions";
+import { addNewDocumentAction } from "../../app/actions";
 import { useRef, useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import { useQueryParam, withDefault, StringParam } from "use-query-params";
