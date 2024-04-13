@@ -8,16 +8,14 @@ import {
     DrawerDescription,
 } from "@/components/ui/drawer"; 
 import { TbLineScan } from "react-icons/tb";
-import FileUpload from "./file-upload";
-import getUser from "@/server/users/getUser";
-import { getServerSession } from "next-auth";
+import FileUpload from "../../../components/home/file-upload";
 import Link from "next/link";
+import { getUserFromSession } from "@/server/session";
+import { ScanLine } from "lucide-react";
 
 const ScanButton = async () => {
 
-    const session = await getServerSession();
-    const user = await getUser(session?.user?.email!);
-
+    const user = await getUserFromSession();
 
 
 
@@ -25,7 +23,7 @@ const ScanButton = async () => {
         <Drawer>
             <DrawerTrigger asChild>
                 <Button variant={"ghost"}>
-                    <TbLineScan/>
+                    <ScanLine className="h-5 w-5"/>
                 </Button>
             </DrawerTrigger>
 
