@@ -10,6 +10,9 @@ import { Metadata } from "next";
 import ScanButton from "./home/scan-button";
 import SideMenu from "@/components/side-menu";
 import DesktopHeader from "@/components/desktop-header";
+import { Home, Inbox } from "lucide-react";
+import Link from "next/link";
+import { Separator } from "@/components/ui/separator";
 
 export const metadata: Metadata = {
     title: 'Your Dashboard',
@@ -35,14 +38,17 @@ export default function HomeLayout({ children }: {
 
 
             
-            <footer className="w-full md:hidden absolute bottom-0 grid grid-cols-3 bg-slate-300">
-                <Button variant={"ghost"}>
-                    <BiSolidHomeAlt2 className={route?.includes('home') ? 'text-slate-900': 'text-white'}/>
-                </Button>
-                <ScanButton/>
-                <Button variant={"ghost"}>
-                    <FiInbox className={route?.includes('inbox') ? 'text-slate-900': 'text-white'}/>
-                </Button>
+            <footer className="w-full md:hidden fixed bg-muted bottom-0">
+                <Separator/>
+                <div className="w-full grid grid-cols-3 py-2">
+                    <Link className="w-full h-full flex items-center justify-center" href="/home">
+                        <Home className={"h-4 w-4 " + route?.includes('home') ? 'text-slate-900': 'text-white'} />
+                    </Link>
+                    <ScanButton/>
+                    <Link className="w-full h-full flex items-center justify-center" href="/home">
+                        <Inbox className={"h-4 w-4 " + route?.includes('inbox') ? 'text-slate-900': 'text-white'}/>
+                    </Link>
+                </div>
             </footer>
         </div>
     )
