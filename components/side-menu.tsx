@@ -8,17 +8,28 @@ import {
   Package,
   Package2,
   ScanLine,
+  Settings,
   ShoppingCart,
   Users,
 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
+import { headers } from "next/headers";
 
 
-
+function getLinkClass(currentRoute: string, linkRoute: string) {
+    let baseClass = "flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary";
+    if (currentRoute?.includes(linkRoute)) {
+        baseClass = "flex items-center gap-3 rounded-lg bg-muted px-3 py-2 text-primary transition-all hover:text-primary";
+    }
+    return baseClass;
+}
 
 export default function SideMenu() {
+    const route = headers().get('next-url')!;
+
+
     return (
         <div className="hidden border-r bg-muted/40 md:block">
             <div className="flex h-full max-h-screen flex-col gap-2">
@@ -40,38 +51,38 @@ export default function SideMenu() {
                     <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
                         <Link
                             href="/home"
-                            className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+                            className={getLinkClass(route, 'home')}
                         >
                             <Home className="h-4 w-4" />
                             Home
                         </Link>
                         <Link
                             href="/documents?filter=all"
-                            className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+                            className={getLinkClass(route, 'documents')}
                         >
                             <LibraryBig className="h-4 w-4" />
                             Documents
                         </Link>
                         <Link
                             href="/scan"
-                            className="flex items-center gap-3 rounded-lg bg-muted px-3 py-2 text-primary transition-all hover:text-primary"
+                            className={getLinkClass(route, 'scan')}
                         >
                             <ScanLine className="h-4 w-4" />
                             Scan
                         </Link>
                         <Link
                             href="#"
-                            className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+                            className={getLinkClass(route, 'inbox')}
                         >
                             <Inbox className="h-4 w-4" />
                             Inbox
                         </Link>
                         <Link
-                            href="#"
-                            className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+                            href="/settings"
+                            className={getLinkClass(route, 'settings')}
                         >
-                            <LineChart className="h-4 w-4" />
-                            Analytics
+                            <Settings className="h-4 w-4" />
+                            Settings
                         </Link>
                     </nav>
                 </div>
