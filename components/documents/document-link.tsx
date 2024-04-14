@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import getFile from "@/services/gcp-storage/getFile";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import QRCodePopover from "@/components/qr-code-popover";
 
 interface DocumentLinkProps {
     fileKey: string,
@@ -18,7 +18,8 @@ export async function DocumentLink({ fileKey }: DocumentLinkProps) {
 
     return (
         <>
-            <div className="flex items-center justify-between w-full md:hidden">
+            {/* Mobile View */}
+            <div className="w-full md:hidden">
                 <Link href={url} target="_blank">
                     <Button 
                         variant='ghost'
@@ -29,27 +30,26 @@ export async function DocumentLink({ fileKey }: DocumentLinkProps) {
                     </Button>
                 </Link>
 
-                <Button variant={'ghost'} disabled>
-                    Get QR Code
-                    <span className="bg-zinc-900 ml-2 text-xs text-white py-0.5 px-1 rounded-xl font-semibold">
-                        Coming Soon
-                    </span>
-                </Button>
+                <QRCodePopover documentUrl={url}>
+                    <Button variant='ghost'>
+                        Get QR Code
+                    </Button>
+                </QRCodePopover>
             </div>
-
+        
+            {/* Desktop View */}
             <div className="max-sm:hidden">
                 <DropdownMenuItem>
                     <Link href={url}>
                         View Document
                     </Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem disabled>
-                    Get QR Code
-                    <span className="bg-zinc-900 ml-2 text-xs text-white py-0.5 px-1 rounded-xl font-semibold">
-                        Coming Soon
-                    </span>
-                </DropdownMenuItem>
 
+                <Link target="_blank" href={"qrcode?url=" + url}>
+                    <DropdownMenuItem>
+                        Get QR Code
+                    </DropdownMenuItem>
+                </Link>
 
             </div>
         
