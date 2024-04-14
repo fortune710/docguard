@@ -3,6 +3,7 @@ import { Settings } from "lucide-react";
 import Link from "next/link";
 import HomePageLayout from "@/components/home/home-page-layout";
 import { getUserFromSession } from "@/server/session";
+import ProfilePicture from "@/components/profile-picture";
 
 
 export default async function HomePage() {
@@ -17,9 +18,9 @@ export default async function HomePage() {
                     <h1 className="font-semibold text-3xl">{user?.name!}</h1>
                 </div>
 
-                <Link className="md:hidden" href="/settings">
-                    <Settings/>
-                </Link>
+                <div className="md:hidden">
+                    <ProfilePicture/>
+                </div>
             </div>
 
             <HomePageLayout/>
