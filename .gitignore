@@ -44,3 +44,6 @@ next-env.d.ts
 
 #Google Cloud Creentials
 docguard-service-key.json
+
+#features
+features.txt
