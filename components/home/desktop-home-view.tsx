@@ -59,7 +59,7 @@ export default async function DesktopHomeView({ userId }: DesktopHomeViewProps) 
               </Card>
             </div>
             <div>
-                <RecentlyAddedDocuments/>
+              <RecentlyAddedDocuments/>
 
             </div>
           </div>
