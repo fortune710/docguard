@@ -4,6 +4,7 @@ import { Card, CardHeader, CardTitle, CardDescription, CardFooter, CardContent }
 import { Pagination, PaginationContent, PaginationItem } from "@/components/ui/pagination";
 import RecentlyAddedDocuments from "@/components/documents/recently-added";
 import FileUploadDrawer from "./file-upload-drawer";
+import ExpringDocuments from "./expiring-documents";
 
 
 interface DesktopHomeViewProps {
@@ -35,32 +36,11 @@ export default async function DesktopHomeView({ userId }: DesktopHomeViewProps) 
                     />
                 </CardFooter>
               </Card>
-              <Card x-chunk="dashboard-05-chunk-1">
-                <CardHeader className="pb-2">
-                  <CardDescription>Expired Documents</CardDescription>
-                  <CardTitle className="text-4xl">0</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-xs text-muted-foreground">
-                    All clear here!
-                  </div>
-                </CardContent>
-              </Card>
-              <Card x-chunk="dashboard-05-chunk-2">
-                <CardHeader className="pb-2">
-                  <CardDescription>Expiring Soon</CardDescription>
-                  <CardTitle className="text-4xl">0</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-xs text-muted-foreground">
-                    Time to start renewing
-                  </div>
-                </CardContent>
-              </Card>
+
+              <ExpringDocuments/>
             </div>
             <div>
               <RecentlyAddedDocuments/>
-
             </div>
           </div>
           <div>
