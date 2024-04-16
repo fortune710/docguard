@@ -1,5 +1,5 @@
 
-# Project Title
+# Project Title - DocGuard
 
 This project is called DocGuard and it is a platform built for storing your most important documnents, and have your identity all in one login. 
 
