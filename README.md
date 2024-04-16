@@ -16,11 +16,11 @@ Existing digital solutions like Google Drive and Dropbox have the following issu
 
 
 ## DocGuard Features
-With Features like QR code document retrieval, Expiry dates out of the box, inbox and notifications for documents about to expire, as well as AI powered uploads, storing and re of your identity has never been easier.
+With Features like QR code document retrieval, Expiry dates out of the box, inbox and notifications for documents about to expire, as well as AI-powered uploads, storing and retrieval of your identity has never been easier.
 
 # Tech
 DocGuard is built with the following technologies:
-1. Next.js: For Client Side UI and Server Side Logic wit client and Server Components.
+1. Next.js: For Client Side UI and Server Side Logic wit client and server Components.
 2. TypeScript
 3. Prisma: ORM for Database
 4. PostgresSQL: Database
@@ -30,7 +30,7 @@ DocGuard is built with the following technologies:
 8. Bun: Runtime for running web application
 9. Vercel: For deployments
 
-## Installatiion
+## Installation
 To get started with this project:
 1. Clone the repository
 ```
@@ -48,7 +48,7 @@ yarn install
 
 3. Run the applcation locally with
 ```
-npm run Drive
+npm run dev
 # or
 bun run dev
 ```
