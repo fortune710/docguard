@@ -56,9 +56,22 @@ model Document {
   is_card Boolean @default(false)
   expiry_date DateTime?
   category    Category @default(personal)
-  user_id     String
+  user_id     String 
   createdAt   DateTime  @default(now())
   user        User      @relation(fields: [user_id], references: [id])
+  card Card[]
+
+  @@index([user_id])
+}
+
+model Card {
+  id String @id @default(uuid())
+  document_id String
+  document Document @relation(fields: [document_id], references: [id])
+  card_front String 
+  card_back String
+
+  @@unique([document_id])
 }
 
 model InboxMessages {
