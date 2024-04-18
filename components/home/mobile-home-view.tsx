@@ -5,12 +5,14 @@ import { Card, CardHeader, CardDescription, CardTitle, CardContent } from "@/com
 import RecentlyAddedDocuments from "@/components/documents/recently-added";
 import CardsStack from "./cards-stack";
 import ExpringDocuments from "./expiring-documents";
+import CardGroup from "@/components/card/card-group";
 
 interface MobileHomeViewProps {
     userId: string;
 }
 
 export default function MobileHomeView({ userId }: MobileHomeViewProps) {
+    
     return (
         <>
 
@@ -20,7 +22,7 @@ export default function MobileHomeView({ userId }: MobileHomeViewProps) {
                     <Link href='/documents?filter=all'>See More</Link>
                 </div>
 
-                <NewCardButton userId={userId}/>
+                <CardGroup userId={userId}/>
 
             </section>
         
