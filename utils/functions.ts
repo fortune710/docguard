@@ -11,9 +11,9 @@ export function generateRandomId(length: number): string {
     return id;
 }
 
-export async function captureImage() {
+export async function captureImage(source: CameraSource = CameraSource.Camera) {
     const photo = await Camera.getPhoto({
-        source: CameraSource.Camera,
+        source,
         quality: 100,
         allowEditing: true,
         resultType: CameraResultType.DataUrl
