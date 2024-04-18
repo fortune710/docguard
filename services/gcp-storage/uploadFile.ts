@@ -1,13 +1,18 @@
 import { generateRandomId } from '@/utils/functions';
 import storage from './storage.config';
 
-const uploadFile = async (fileData: any, fileName: string) => {
+const uploadFile = async (
+    fileData: any, 
+    bucketFolderName: string = 'documents'
+) => {
+    if (!fileData) return "";
+    
     const fileKey = generateRandomId(10);
-    const filePath = `documents/${fileKey}.png`
-    await storage.bucket('docguard-bucket-v1').file(fileName).save(Buffer.from(fileData))
+    const filePath = `${bucketFolderName}/${fileKey}.png`
+    await storage.bucket('docguard-bucket-v1').file(filePath).save(Buffer.from(fileData))
     //encrypt file later
 
-    return filePath;
+    return filePath; //This will be stored in DB
 }
 
 export default uploadFile;

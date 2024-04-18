@@ -5,6 +5,8 @@ import { Pagination, PaginationContent, PaginationItem } from "@/components/ui/p
 import RecentlyAddedDocuments from "@/components/documents/recently-added";
 import FileUploadDrawer from "./file-upload-drawer";
 import ExpringDocuments from "./expiring-documents";
+import NewCardButton from "./new-card-button";
+import CardGroup from "../card/card-group";
 
 
 interface DesktopHomeViewProps {
@@ -55,25 +57,12 @@ export default async function DesktopHomeView({ userId }: DesktopHomeViewProps) 
                   <CardDescription>All your cards in one place</CardDescription>
                 </div>
                 <div className="ml-auto flex items-center gap-1">
-                  <Button size="sm" variant="outline" className="h-8 gap-1">
-                    <Plus className="h-3.5 w-3.5" />
-                    <span className="lg:sr-only xl:not-sr-only xl:whitespace-nowrap">
-                      Add New
-                    </span>
-                  </Button>
+                  <NewCardButton userId={userId}/>
                 </div>
               </CardHeader>
               <CardContent className="p-6 text-sm">
-                <div className="grid gap-3">
-                    {
-                        ["", "", ""].map((_, index) => (
-                            <Card key={index}>
-                                <CardContent className="h-32">
-
-                                </CardContent>
-                            </Card>
-                        ))
-                    }
+                <div>
+                  <CardGroup userId={userId}/>
                 </div>
               </CardContent>
               <CardFooter className="flex flex-row items-center border-t bg-muted/50 px-6 py-3">
