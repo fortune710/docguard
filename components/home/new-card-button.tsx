@@ -40,7 +40,7 @@ export default function NewCardButton({ userId }: { userId: string }) {
             userId={userId}
             uploadFileButton={
                     <Button 
-                        className="flex items-center justify-center h-[150px] w-full rounded-lg border border-dashed"
+                        className="flex items-center justify-center h-[200px] w-full rounded-lg border border-dashed"
                         variant='ghost'
                         onClick={() => setIsCard('true')}
                     >

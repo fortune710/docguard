@@ -78,6 +78,9 @@ export default async function CardGroup({ userId }: { userId: string }) {
                                     </CarouselItem>
                                 ))
                             }
+                            <CarouselItem>
+                                <NewCardButton userId={cards[0].user_id}/>
+                            </CarouselItem>
                         </CarouselContent>
 
                         <CarouselPrevious className="absolute z-10 left-0"/>

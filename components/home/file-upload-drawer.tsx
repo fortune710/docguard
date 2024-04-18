@@ -151,9 +151,9 @@ export default function FileUploadDrawer({ userId, uploadFileButton }: FileUploa
                                     <Input
                                         name="is_card"
                                         type="checkbox"
-                                        disabled={!!isCard}
                                         className="w-3 h-3"
-                                        checked={!!isCard}
+                                        defaultChecked={!!isCard}
+                                        onChange={(e) => setIsCard(e.target.checked ? 'true' : null)}
                                     />
                                     <label htmlFor="is_card">If Document is a card, click this</label>
                                 </div>
@@ -249,6 +249,19 @@ export default function FileUploadDrawer({ userId, uploadFileButton }: FileUploa
                                                                             
                                     </>
                                 }
+
+                                
+                                <div className="flex items-center gap-2">
+                                    <Input
+                                        name="is_card"
+                                        type="checkbox"
+                                        className="w-3 h-3"
+                                        defaultChecked={!!isCard || isCard === 'true'}
+                                        onChange={(e) => setIsCard(e.target.checked ? 'true' : null)}
+                                    />
+                                    <label htmlFor="is_card">If Document is a card, click this</label>
+                                </div>
+
 
 
                                 <div>
