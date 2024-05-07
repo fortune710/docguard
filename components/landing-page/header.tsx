@@ -2,7 +2,8 @@ import MenuButton from '@/components/landing-page/menu-btn'
 import Image from 'next/image'
 
 
-export default function Header() {
+export default async function Header() {
+    
     return (
         <header className='px-4 md:px-9 lg:px-12 pt-3 md:pt-5'>
             <nav className='flex items-center justify-between w-full'>

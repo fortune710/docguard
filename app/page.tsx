@@ -4,7 +4,6 @@ import GetStartedSection from '@/components/landing-page/get-started'
 import Header from '@/components/landing-page/header'
 import Hero from '@/components/landing-page/hero'
 import Testimonials from '@/components/landing-page/testimonials'
-import sendEmail from '@/services/ses/sendEmail'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -13,7 +12,6 @@ export const metadata: Metadata = {
 }
 
 export default function Home() {
-  sendEmail(['fortunealebiosu710@gmail.com'], 'Testing', 'This is a test https://linkedin.com/in/fortunealebiosu')
   return (
     <>
       <Header/>
