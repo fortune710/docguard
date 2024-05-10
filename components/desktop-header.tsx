@@ -1,11 +1,12 @@
 import { Search } from "lucide-react"
-
 import { Input } from "@/components/ui/input"
 import ProfilePicture from "./profile-picture"
+import { getUserFromSession } from "@/server/session"
 
 
 
 export default async function DesktopHeader() {
+    const user = await getUserFromSession()
 
 
     return (
@@ -23,7 +24,10 @@ export default async function DesktopHeader() {
                 </form>
             </div>
             
-            <ProfilePicture/>
+            <ProfilePicture
+                profilePicture={user?.image!}
+                name={user?.name!}
+            />
         </header>
     )
 }

@@ -1,19 +1,20 @@
 import DesktopHomeView from "./desktop-home-view";
 import MobileHomeView from "./mobile-home-view";
-import { getUserFromSession } from "@/server/session";
 
+interface HomePageLayoutProps {
+    userId: string
+}
 
-export default async function HomePageLayout() {
-    const user = await getUserFromSession();
+export default async function HomePageLayout({ userId }: HomePageLayoutProps) {
 
     return (
         <main>
             <div className="max-md:hidden">
-                <DesktopHomeView userId={user?.id!}/>
+                <DesktopHomeView userId={userId}/>
             </div>
 
             <div className="md:hidden">
-                <MobileHomeView userId={user?.id!}/>
+                <MobileHomeView userId={userId}/>
             </div>
         </main>
 
