@@ -1,26 +1,37 @@
 
 import { Button } from "@/components/ui/button";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
-import getFile from "@/services/gcp-storage/getFile";
 import Link from "next/link";
 import QRCodePopover from "@/components/qr-code-popover";
+import { useQuery } from "@tanstack/react-query";
 
 interface DocumentLinkProps {
     fileKey: string,
 }
 
-export const revalidate = 5 * 60 //every 5 minutes
 
 
-export async function DocumentLink({ fileKey }: DocumentLinkProps) {
+export function DocumentLink({ fileKey }: DocumentLinkProps) {
     
-    const url = await getFile(fileKey);
+    const { isLoading, data: url } = useQuery({
+        queryKey: ["fileKey", fileKey], 
+        queryFn: async () => {
+            const response = await fetch(`/api/documents/url?file_key=${fileKey}`);
+            const res = await response.json();
+            return res.data.url;
+        },
+        refetchInterval: 5 * 60 * 1000,
+    })
 
     return (
         <>
             {/* Mobile View */}
             <div className="w-full md:hidden">
-                <Link href={url} target="_blank">
+                <Link 
+                    aria-disabled={isLoading} 
+                    href={url ?? ""} 
+                    target="_blank"
+                >
                     <Button 
                         variant='ghost'
                         className="font-semibold" 
@@ -39,14 +50,18 @@ export async function DocumentLink({ fileKey }: DocumentLinkProps) {
         
             {/* Desktop View */}
             <div className="max-sm:hidden">
-                <DropdownMenuItem>
-                    <Link href={url}>
+                <DropdownMenuItem disabled={isLoading || !url}>
+                    <Link 
+                        aria-disabled={isLoading || !url} 
+                        href={url ?? ""}
+                        target="_blank"
+                    >
                         View Document
                     </Link>
                 </DropdownMenuItem>
 
                 <Link target="_blank" href={"qrcode?url=" + url}>
-                    <DropdownMenuItem>
+                    <DropdownMenuItem disabled={isLoading || !url}>
                         Get QR Code
                     </DropdownMenuItem>
                 </Link>

@@ -16,6 +16,7 @@ import {
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import { headers } from "next/headers";
+import { getUserFromSession } from "@/server/session";
 
 
 function getLinkClass(currentRoute: string, linkRoute: string) {
@@ -26,8 +27,10 @@ function getLinkClass(currentRoute: string, linkRoute: string) {
     return baseClass;
 }
 
-export default function SideMenu() {
+export default async function SideMenu() {
     const route = headers().get('next-url')!;
+
+    const user = await getUserFromSession();
 
 
     return (
@@ -64,7 +67,7 @@ export default function SideMenu() {
                             Documents
                         </Link>
                         <Link
-                            href="/scan"
+                            href={`/scan?user_id=${user?.id!}`}
                             className={getLinkClass(route, 'scan')}
                         >
                             <ScanLine className="h-4 w-4" />

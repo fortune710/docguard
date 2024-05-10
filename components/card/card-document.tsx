@@ -1,10 +1,39 @@
-import getFile from "@/services/gcp-storage/getFile";
+"use client"
+import { useEffect, useMemo, useState } from "react";
 import { Card, CardContent } from "../ui/card";
 
 
 
-export default async function CardDocument({ cardSideKey }: { cardSideKey: string }) {
-    const url = await getFile(cardSideKey);
+export default function CardDocument({ cardSideKey }: { cardSideKey: string }) {
+    //const url = await getFile(cardSideKey);
+
+    const [url, setUrl] = useState<string>("");
+
+    const _ = useMemo(() => {
+        if(!cardSideKey) return;
+
+        async function getUrl() {
+            const response = await fetch("/api/card", {
+                method: "POST",
+                body: JSON.stringify({
+                    card_key: cardSideKey
+                }),
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                next: {
+                    tags: [cardSideKey],
+                    revalidate: 5 * 60 * 1000,
+                }
+            });
+            const { data } = await response.json()
+            setUrl(data.url);
+        }
+        getUrl()
+    }, [cardSideKey])
+    
+
+
 
     if(!url) {
         return (

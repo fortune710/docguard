@@ -18,11 +18,13 @@ interface ScanData {
     imageFile?: File
 }
 
+const defaultImageState: ScanData = {
+    imageDataString: "",
+    imageFile: undefined
+}
+
 export default function ScanPage() {
-    const [activeImage, setActiveImage] = useState<ScanData>({
-        imageDataString: "",
-        imageFile: undefined
-    });
+    const [activeImage, setActiveImage] = useState<ScanData>(defaultImageState);
 
     const searchParams = useSearchParams();
 
@@ -35,7 +37,6 @@ export default function ScanPage() {
         })
         
         const parts = photo.dataUrl!.split(',');
-        //const mime = parts[0].split(':')[1].split(';')[0];
         const data = parts[1];
 
         // Decode the base64 data
@@ -56,13 +57,16 @@ export default function ScanPage() {
         const fileName = generateRandomId(10);
         // Create a new File object from the Blob
         const file = new File([blob], `${fileName}.png`, { type: 'image/png' });
-        const url = URL.createObjectURL(file);
 
         
         setActiveImage({
             imageDataString: photo.dataUrl!,
             imageFile: file
         })   
+    }
+
+    const removeImage = () => {
+        return setActiveImage(defaultImageState)
     }
 
     const formRef = useRef<HTMLFormElement>(null);
@@ -78,6 +82,7 @@ export default function ScanPage() {
         addNewDocument(formData)
         .then(() => {
             formRef?.current?.reset();
+            setActiveImage(defaultImageState)
 
             toast({
                 title: 'Upload Successful',
@@ -96,66 +101,100 @@ export default function ScanPage() {
 
     return (
         <main>
-            <Button 
-                onClick={scanAsImage}
-                variant={"ghost"} 
-                className="w-full rounded-lg"
+            <form 
+                ref={formRef}
+                className="px-3 flex flex-col gap-2 w-2/3 ml-6 pt-5" 
+                action={handleFormAction}
             >
-                Capture Image
-            </Button>
-
-            {
-                !activeImage ? null :
-            <img src={activeImage.imageDataString} alt="Image" width={50} height={50} />
-
-            }
-
-            <form ref={formRef} className="px-3 flex flex-col gap-2" action={handleFormAction}>
-                    <div className="w-full">
-                        <label htmlFor="title">Title</label>
-                        <Input
-                            placeholder="eg. Birth Certificate, School ID"
-                            name="title"
-                            className="mt-0.5"
-                        />
-                    </div>
-
-                    <div>
-                        <label htmlFor="description">Description</label>
-                        <Textarea
-                            placeholder="Information about the document, like who it belongs to, etc"
-                            name="description"
-                            className="mt-0.5"
-                        />
-                    </div>
-
-                    <div>
-                        <label htmlFor="category">Category</label>
-                        <CategorySelect/>
-                    </div>
-
-                    <div className="flex items-center gap-2">
-                        <Input
-                            name="is_card"
-                            type="checkbox"
-                            className="w-3 h-3"
-                            checked={!!isCard}
-                        />
-                        <label htmlFor="is_card">If Document is a card, click this</label>
-                    </div>
+                <>
+                    {
+                        !activeImage.imageFile ? (
+                            <div>
+                                <label htmlFor="title">Document Image</label>
+                                <button onClick={scanAsImage} type="button" className="mt-2 w-3/5 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
+                                    <div className="text-center">
+                                        <svg className="mx-auto h-12 w-12 text-gray-300" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                            <path fill-rule="evenodd" d="M1.5 6a2.25 2.25 0 012.25-2.25h16.5A2.25 2.25 0 0122.5 6v12a2.25 2.25 0 01-2.25 2.25H3.75A2.25 2.25 0 011.5 18V6zM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0021 18v-1.94l-2.69-2.689a1.5 1.5 0 00-2.12 0l-.88.879.97.97a.75.75 0 11-1.06 1.06l-5.16-5.159a1.5 1.5 0 00-2.12 0L3 16.061zm10.125-7.81a1.125 1.125 0 112.25 0 1.125 1.125 0 01-2.25 0z" clip-rule="evenodd" />
+                                        </svg>
+                                        <div className="mt-4 flex text-sm leading-6 text-gray-600">
+                                            <label className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
+                                                <span>Click to capture</span>
+                                            </label>
+                                            <p className="pl-1">or drag and drop (coming soon)</p>
+                                        </div>
+                                        <p className="text-xs leading-5 text-gray-600">PNG, JPG, GIF up to 10MB</p>
+                                    </div>
+                                </button>
+                            </div>
+                        ):
+                        <div className="flex items-center gap-3">
+                            <Image 
+                                src={activeImage.imageDataString} 
+                                alt="Image" 
+                                width={200} height={200} 
+                                className="rounded-xl"
+                            />
+                            <Button 
+                                onClick={removeImage}
+                                type="button"
+                                variant="destructive"
+                                className="w-1/4 rounded-lg"
+                            >
+                                Remove
+                            </Button>
+                        </div>
+                    }
+                </>
 
 
-                    <div>
-                        <label htmlFor="expiry_date">Expiry Date</label>
-                        <Input
-                            placeholder="eg. Birth Certificate, School ID"
-                            name="expiry_date"
-                            type="date"
-                        />
-                    </div>
+                <div className="w-4/5">
+                    <label htmlFor="title">Title</label>
+                    <Input
+                        placeholder="eg. Birth Certificate, School ID"
+                        name="title"
+                        className="mt-0.5"
+                    />
+                </div>
+
+                <div>
+                    <label htmlFor="description">Description</label>
+                    <Textarea
+                        placeholder="Information about the document, like who it belongs to, etc"
+                        name="description"
+                        className="mt-0.5"
+                    />
+                </div>
+
+                <div>
+                    <label htmlFor="category">Category</label>
+                    <CategorySelect/>
+                </div>
+
+                <div className="flex items-center gap-2">
+                    <Input
+                        name="is_card"
+                        type="checkbox"
+                        className="w-3 h-3"
+                        checked={!!isCard}
+                    />
+                    <label htmlFor="is_card">If Document is a card, click this</label>
+                </div>
+
+
+                <div>
+                    <label htmlFor="expiry_date">Expiry Date</label>
+                    <Input
+                        placeholder="eg. Birth Certificate, School ID"
+                        name="expiry_date"
+                        type="date"
+                    />
+                </div>
+
+                <div className="mt-5 w-full">
                     <SubmitDocumentButton/>
+                </div>
 
-                </form>
+            </form>
 
         </main>
     )

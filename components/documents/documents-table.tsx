@@ -1,3 +1,5 @@
+"use client"
+
 import {
     Table,
     TableBody,
@@ -10,6 +12,7 @@ import { Documents } from "@/server/types"
 import {
     DropdownMenu,
     DropdownMenuContent,
+    DropdownMenuItem,
     DropdownMenuLabel,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
@@ -18,6 +21,8 @@ import { MoreHorizontal } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { DocumentLink } from "./document-link"
+import DeleteDocumentDialog from "../dialogs/delete-document-dialog"
+import { useState } from "react"
 
   
 interface DocumentsTableProps {
@@ -25,6 +30,8 @@ interface DocumentsTableProps {
 }
 
 export default function DocumentsTable({ documents }: DocumentsTableProps) {
+    const [dialogOpen, setDialogOpen] = useState(false)
+
     return (
         <Table>
             <TableHeader>
@@ -68,8 +75,19 @@ export default function DocumentsTable({ documents }: DocumentsTableProps) {
                                 <DropdownMenuContent align="end">
                                     <DropdownMenuLabel>Actions</DropdownMenuLabel>
                                     <DocumentLink fileKey={document.file_key}/>
+                                    <DropdownMenuItem 
+                                        onClick={() => setDialogOpen(true)}
+                                        className="text-red-600"
+                                    >
+                                        Delete Document
+                                    </DropdownMenuItem>
                                 </DropdownMenuContent>
                             </DropdownMenu>
+                            <DeleteDocumentDialog 
+                                documentId={document.id}
+                                open={dialogOpen}
+                                onOpenChange={(open) => setDialogOpen(open)}
+                            />
                         </TableCell>
                     </TableRow>
 
