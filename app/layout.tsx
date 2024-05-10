@@ -4,6 +4,7 @@ import { Toaster } from "@/components/ui/toaster"
 import './globals.css'
 import PWALoader from './pwa-loader'
 import QueryParamProvider from './query-param-provider'
+import TanstackQueryProvider from './query-provider'
 
 const inter = Inter({ 
   subsets: ['latin'], 
@@ -24,11 +25,13 @@ export default function RootLayout({
 
   return (
     <QueryParamProvider>
-      <html lang="en">
-        <body className={inter.className}>{children}</body>
-        <Toaster/>
-        <PWALoader/>
-      </html>
+      <TanstackQueryProvider>
+        <html lang="en">
+          <body className={inter.className}>{children}</body>
+          <Toaster/>
+          <PWALoader/>
+        </html>
+      </TanstackQueryProvider>
     </QueryParamProvider>
   )
 }
