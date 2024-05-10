@@ -7,6 +7,7 @@ import uploadFile from "@/services/gcp-storage/uploadFile";
 import { ImageUploadData } from "@/types";
 import createNewCard from "@/server/card/createNewCard";
 import updateDocument from "@/server/documents/updateDocument";
+import deleteDocument from "@/server/documents/deleteDcoument";
 
 export const addNewDocumentAction = async (userId: string, formData: FormData) => {
     const file = formData.get("file") as File;
@@ -18,14 +19,13 @@ export const addNewDocumentAction = async (userId: string, formData: FormData) =
 
     const fileBuffer = await file?.arrayBuffer()!;
     const fileKey = !fileBuffer ? "" :  await uploadFile(fileBuffer)
-    
     const newDocument = await createNewDocument({
         title: title.toString(),
         description: description.toString(),
         file_key: fileKey,
         expiry_date: expiryDate,
         user_id: userId,
-        is_card: !!is_card.toString(),
+        is_card: !!is_card?.toString() || false,
         category,
     })
 
@@ -34,7 +34,8 @@ export const addNewDocumentAction = async (userId: string, formData: FormData) =
         revalidatePath('/home')
         redirect('/home')
     }*/
-    
+    revalidatePath('/home')
+
     return newDocument.id
 
 }
@@ -71,4 +72,11 @@ export const addNewCard = async (formData: FormData) => {
 
     revalidatePath('/home')
 
+}
+
+export const deleteUserDocument = async (documentId: string, formData: FormData) => {
+    console.log(documentId)
+    const doc = await deleteDocument(documentId)
+    revalidatePath('/home')
+    revalidatePath('/documents')
 }
