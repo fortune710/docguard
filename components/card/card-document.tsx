@@ -13,7 +13,14 @@ export default function CardDocument({ cardSideKey }: { cardSideKey: string }) {
         if(!cardSideKey) return;
 
         async function getUrl() {
-            const response = await fetch(`/api/card?card_key=${cardSideKey}`, {
+            const response = await fetch("/api/card", {
+                method: "POST",
+                body: JSON.stringify({
+                    card_key: cardSideKey
+                }),
+                headers: {
+                    "Content-Type": "application/json"
+                },
                 next: {
                     tags: [cardSideKey],
                     revalidate: 5 * 60 * 1000,
@@ -25,23 +32,7 @@ export default function CardDocument({ cardSideKey }: { cardSideKey: string }) {
         getUrl()
     }, [cardSideKey])
     
-    /*
-    useEffect(() => {
-        if(!cardSideKey) return;
 
-        console.log(cardSideKey)
-        async function getUrl() {
-            const response = await fetch(`/api/card/${cardSideKey}`, {
-                next: {
-                    tags: [cardSideKey],
-                    revalidate: 5 * 60 * 1000,
-                }
-            });
-            const { data } = await response.json()
-            setUrl(data.url);
-        }
-        getUrl()
-    }, [cardSideKey])*/
 
 
     if(!url) {
