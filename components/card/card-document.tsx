@@ -1,18 +1,16 @@
 "use client"
 import { useEffect, useMemo, useState } from "react";
 import { Card, CardContent } from "../ui/card";
+import { useQuery } from "@tanstack/react-query";
+import Image from "next/image";
 
 
 
 export default function CardDocument({ cardSideKey }: { cardSideKey: string }) {
-    //const url = await getFile(cardSideKey);
 
-    const [url, setUrl] = useState<string>("");
-
-    const _ = useMemo(() => {
-        if(!cardSideKey) return;
-
-        async function getUrl() {
+    const { isLoading, data: url } = useQuery({
+        queryKey: ["card-side", cardSideKey],
+        queryFn: async () => {
             const response = await fetch("/api/card", {
                 method: "POST",
                 body: JSON.stringify({
@@ -21,19 +19,31 @@ export default function CardDocument({ cardSideKey }: { cardSideKey: string }) {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                next: {
-                    tags: [cardSideKey],
-                    revalidate: 5 * 60 * 1000,
-                }
             });
             const { data } = await response.json()
-            setUrl(data.url);
-        }
-        getUrl()
-    }, [cardSideKey])
+            const url = data.url
+            return url
+        },
+        enabled: !!cardSideKey,
+        refetchInterval: 5 * 60 * 1000
+    })
+
+    if(isLoading) {
+        return (
+            <Card className="cursor-pointer">
+                <CardContent className="h-[200px] p-0 flex items-center justify-center">
+                    <Image 
+                        src="/loading-spinner.svg" 
+                        alt="Loading Spinner" 
+                        width={60} 
+                        height={60}
+                    />
+                </CardContent>
+            </Card>
+        )
+    }
+
     
-
-
 
     if(!url) {
         return (
