@@ -12,7 +12,7 @@ export default function DrawerOrDialog({ trigger, children, title, description }
 
     return (
         <>
-            <div key="mobile"  className="sm:hidden">
+            <div  className="sm:hidden">
                 <Drawer>
                     <DrawerTrigger  className="w-full">
                         { trigger }
@@ -38,7 +38,7 @@ export default function DrawerOrDialog({ trigger, children, title, description }
                 </Drawer>
             </div>
 
-            <div key="desktop"  className="max-sm:hidden">
+            <div  className="max-sm:hidden">
                 <AlertDialog>
                     <AlertDialogTrigger className="w-full">
                         { trigger }
