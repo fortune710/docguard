@@ -45,7 +45,11 @@ export default function HomeLayout({ children }: {
                         <Home className={"h-4 w-4 " + route?.includes('home') ? 'text-slate-900': 'text-white'} />
                     </Link>
                     <ScanButton/>
-                    <Link className="w-full h-full flex items-center justify-center" href="/home">
+                    <Link 
+                        aria-disabled={true}
+                        className="w-full h-full flex items-center justify-center" 
+                        href="/inbox"
+                    >
                         <Inbox className={"h-4 w-4 " + route?.includes('inbox') ? 'text-slate-900': 'text-white'}/>
                     </Link>
                 </div>

@@ -1,6 +1,3 @@
-//import SignOutButton from "@/components/sign-out-btn";
-import { Settings } from "lucide-react";
-import Link from "next/link";
 import HomePageLayout from "@/components/home/home-page-layout";
 import { getUserFromSession } from "@/server/session";
 import ProfilePicture from "@/components/profile-picture";
@@ -19,11 +16,14 @@ export default async function HomePage() {
                 </div>
 
                 <div className="md:hidden">
-                    <ProfilePicture/>
+                    <ProfilePicture
+                        name={user?.name!}
+                        profilePicture={user?.image!}
+                    />
                 </div>
             </div>
 
-            <HomePageLayout/>
+            <HomePageLayout userId={user?.id!}/>
 
         </main>
     )

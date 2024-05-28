@@ -1,15 +1,17 @@
-import { getUserFromSession } from "@/server/session"
 import UserDropdown from "./user-dropdown";
 
+interface ProfilePictureProps {
+    profilePicture: string,
+    name: string
+}
 
-export default async function ProfilePicture() {
+export default async function ProfilePicture({ profilePicture, name }: ProfilePictureProps) {
 
-    const user = await getUserFromSession();
 
     return (
         <UserDropdown
-            image={user?.image!}
-            name={user?.name!}
+            image={profilePicture}
+            name={name}
         />
     )
 }
