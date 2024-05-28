@@ -74,7 +74,8 @@ export default async function SideMenu() {
                             Scan
                         </Link>
                         <Link
-                            href="#"
+                            href="/inbox"
+                            aria-disabled={true}
                             className={getLinkClass(route, 'inbox')}
                         >
                             <Inbox className="h-4 w-4" />
@@ -82,6 +83,7 @@ export default async function SideMenu() {
                         </Link>
                         <Link
                             href="/settings"
+                            aria-disabled={true}
                             className={getLinkClass(route, 'settings')}
                         >
                             <Settings className="h-4 w-4" />
