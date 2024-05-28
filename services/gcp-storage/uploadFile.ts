@@ -3,12 +3,13 @@ import storage from './storage.config';
 
 const uploadFile = async (
     fileData: any, 
+    fileType: string,
     bucketFolderName: string = 'documents'
 ) => {
     if (!fileData) return "";
     
     const fileKey = generateRandomId(10);
-    const filePath = `${bucketFolderName}/${fileKey}.png`
+    const filePath = `${bucketFolderName}/${fileKey}.${fileType}`
     await storage.bucket('docguard-bucket-v1').file(filePath).save(Buffer.from(fileData))
     //encrypt file later
 
