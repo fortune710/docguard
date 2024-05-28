@@ -72,7 +72,10 @@ export default function FileUploadDrawer({ userId, uploadFileButton }: FileUploa
         <>
             {
                 !isMobile ? 
-                <AlertDialog>
+                <AlertDialog 
+                    open={drawerOpen}
+                    onOpenChange={(open) => setDrawer(open)}
+                >
                     <AlertDialogTrigger asChild>
                         { uploadFileButton }
                     </AlertDialogTrigger>
