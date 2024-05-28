@@ -9,6 +9,8 @@ import createNewCard from "@/server/card/createNewCard";
 import updateDocument from "@/server/documents/updateDocument";
 import deleteDocument from "@/server/documents/deleteDcoument";
 
+import { DocumentsSchema } from "@/lib/schema";
+
 export const addNewDocumentAction = async (userId: string, formData: FormData) => {
     const file = formData.get("file") as File;
     const formEntries = formData.entries();
@@ -16,10 +18,14 @@ export const addNewDocumentAction = async (userId: string, formData: FormData) =
     
     const expiryDate = !expiry_date ? null : new Date(expiry_date as any).toISOString();    
 
+    const fileType = file.type.split('/').at(-1);
 
+    
     const fileBuffer = await file?.arrayBuffer()!;
-    const fileKey = !fileBuffer ? "" :  await uploadFile(fileBuffer)
-    const newDocument = await createNewDocument({
+    const fileKey = !fileBuffer ? "" :  await uploadFile(fileBuffer, fileType!)
+
+
+    const documentsData = {
         title: title.toString(),
         description: description.toString(),
         file_key: fileKey,
@@ -27,16 +33,16 @@ export const addNewDocumentAction = async (userId: string, formData: FormData) =
         user_id: userId,
         is_card: !!is_card?.toString() || false,
         category,
-    })
+    }
 
-    /*
-    if (!!!is_card.toString()) {
-        revalidatePath('/home')
-        redirect('/home')
-    }*/
+    const parsedDocument = await DocumentsSchema.parseAsync(documentsData)
+    const newDocument = await createNewDocument(parsedDocument)
+
+
     revalidatePath('/home')
 
     return newDocument.id
+    
 
 }
 
