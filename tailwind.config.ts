@@ -79,6 +79,16 @@ const config = {
         "reverse-slide": {
           from: { opacity: "0", transform: "translateY(200px)" },
           to: { opacity: "1", transform: "translateY(0)" }
+        },
+        "text-focus-in": {
+          "0%": {
+              filter: "blur(12px)",
+              opacity: "0"
+          },
+          to: {
+              filter: "blur(0)",
+              opacity: "1"
+          }
         }
 
       },
@@ -89,7 +99,8 @@ const config = {
         "slide-up-300": "slide 1s ease-out 300ms forwards",
         "slide-up-500": "slide 1s ease-out 500ms forwards",
         "slide-up-700": "slide 1s ease-out 700ms forwards",
-        "slide-down": "reverse-slide 1s ease-out 1.2s forwards"
+        "slide-down": "reverse-slide 1s ease-out 1.2s forwards",
+        "text-focus-in": "text-focus-in 1s cubic-bezier(0.550, 0.085, 0.680, 0.530)   both"
       },
     },
   },
