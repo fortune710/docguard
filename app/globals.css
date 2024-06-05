@@ -82,3 +82,7 @@
   font-family: 'PP-Mori';
   font-weight: 600;
 }
+
+.all-unset {
+  all: unset;
+}

@@ -8,14 +8,16 @@ import {
 } from "@/components/ui/card";
 import findDocumentsExpiringSoon from "@/server/documents/findDocumentsExpringSoon";
 import findExpiredDocumets from "@/server/documents/findExpiredDcouments";
+import { getUserFromSession } from "@/server/session";
 
 export default async function ExpringDocuments() {
+  const user = await getUserFromSession();
+
   const [expiredDocuments, documentsExpiringSoon] = await Promise.all([
-    await findExpiredDocumets(),
-    await findDocumentsExpiringSoon(),
+    await findExpiredDocumets(user?.id!),
+    await findDocumentsExpiringSoon(user?.id!),
   ]);
 
-  console.log(documentsExpiringSoon.length, documentsExpiringSoon);
   return (
     <>
       <Card x-chunk="dashboard-05-chunk-1">

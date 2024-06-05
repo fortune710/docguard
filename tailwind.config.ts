@@ -18,6 +18,9 @@ const config = {
       },
     },
     extend: {
+      fontSize: {
+        "2xs": "10px"
+      },
       fontFamily: {
         inter: 'var(--font-inter)',
         ppmori: 'var(--font-ppmori)'

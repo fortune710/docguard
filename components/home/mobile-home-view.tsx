@@ -6,6 +6,7 @@ import RecentlyAddedDocuments from "@/components/documents/recently-added";
 import CardsStack from "./cards-stack";
 import ExpringDocuments from "./expiring-documents";
 import CardGroup from "@/components/card/card-group";
+import SearchModal from "../search/search-modal";
 
 interface MobileHomeViewProps {
     userId: string;
@@ -15,6 +16,7 @@ export default function MobileHomeView({ userId }: MobileHomeViewProps) {
     
     return (
         <>
+            <SearchModal userId={userId}/>
 
             <section className="w-full mt-4">
                 <div className="w-full flex items-center justify-between mb-1">
