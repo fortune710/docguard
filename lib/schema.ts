@@ -14,3 +14,14 @@ export const DocumentsSchema = z.object({
     is_card: z.boolean(),
     category: z.string().trim()
 })
+
+export const SearchQuerySchema = z.object({
+    user_id: z.string({
+        required_error: "Cannot find user identifier"
+    }).trim().min(5, {
+        message: "User Id not valid"
+    }),
+    query: z.string({
+        required_error: "Search query not present"
+    }).trim()
+})
