@@ -17,7 +17,7 @@ const SearchResults = ({ results, resultsLoading }: SearchResultsProps) => {
                     <li className="animate-pulse bg-zinc-200 rounded-md h-12 w-full"/> 
                 </> :
                 results?.map((document) => (
-                    <li className="grid grid-cols-[30px_auto_30px] items-center gap-3 text-sm font-medium font-inter hover:bg-zinc-200 rounded-md py-2.5 px-3 w-full">
+                    <li className="grid grid-cols-[30px_auto_30px] items-center gap-3 text-sm font-medium font-inter hover:bg-zinc-200 rounded-md py-2.5 px-3 w-full" key={document.id}>
                         <File className="h-6 w-6"/>
                         <div>
                             <p className="text-2xs capitalize">{document.category}</p>
