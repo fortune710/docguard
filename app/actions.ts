@@ -10,6 +10,9 @@ import updateDocument from "@/server/documents/updateDocument";
 import deleteDocument from "@/server/documents/deleteDcoument";
 
 import { DocumentsSchema } from "@/lib/schema";
+import getUserWithEmail from "@/server/users/getUserWithEmail";
+import hashPassword from "@/server/users/hashPassword";
+import updateUser from "@/server/users/updateUser";
 
 export const addNewDocumentAction = async (userId: string, formData: FormData) => {
     const file = formData.get("file") as File;
@@ -85,4 +88,15 @@ export const deleteUserDocument = async (documentId: string, formData: FormData)
     const doc = await deleteDocument(documentId)
     revalidatePath('/home')
     revalidatePath('/documents')
+}
+
+export const resetPasswordAction = async (email: string, formData: FormData) => {
+    try {
+        const password = formData.get('password')?.toString()!;
+        const hashedPassword = hashPassword(password);
+        await updateUser({ password: hashedPassword }, email);
+    } catch {
+        throw new Error("Error with reset")
+    }
+
 }

@@ -69,8 +69,14 @@ const handler = NextAuth({
         },
         signIn: async ({ user }) => {
             const fullUser = await getUserWithEmail(user?.email!);
+            const otp = generateOTP();
+            
+            if (!fullUser?.password) {
+                await sendVerificationEmail(fullUser?.email!, otp)
+                return `/login?unauthorized=true&email=${user?.email}&reset=true`
+            }
+            
             if (!fullUser?.emailVerified) {
-                const otp = generateOTP();
                 
                 await Promise.all([
                     await createVerification(fullUser?.id!, otp),
@@ -78,6 +84,7 @@ const handler = NextAuth({
                 ])           
                 return `/login?unauthorized=true&email=${user?.email!}`
             }
+
 
             return true
         }
