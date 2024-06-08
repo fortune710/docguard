@@ -8,11 +8,11 @@ export default async function WelcomePage() {
                 <h3 className="text-5xl font-semibold font-ppmori animate-text-focus-in">Welcome To DocGuard</h3>
 
                 <p className="text-2xl font-medium font-ppmori text-center animate-text-focus-in">Your new digital pass</p>
-                    <Link href="/home">
-                        <Button className="mx-auto">
-                            Go to your Dashboard
-                        </Button>
-                    </Link>
+                <Link className="mx-auto" href="/home">
+                    <Button>
+                        Go to your Dashboard
+                    </Button>
+                </Link>
             </div>
         </main>
     )

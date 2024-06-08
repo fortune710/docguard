@@ -19,12 +19,10 @@ export async function GET(req: Request) {
 
     try {
         const user = await getUserWithEmail(user_email)!
-        const [_, email] = await Promise.all([
+        await Promise.all([
             await updateVerification(user?.id!, otp),
             await sendVerificationEmail(user?.email!, otp)
         ])
-
-        console.log(email)
 
         return Response.json({
             daat: null,
