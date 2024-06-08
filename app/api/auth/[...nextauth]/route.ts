@@ -88,7 +88,8 @@ const handler = NextAuth({
             }
 
             if (!fullUser?.emailVerified) {
-                await updateUser({ emailVerified: new Date(Date.now()) }, profile?.email!)    
+                await updateUser({ emailVerified: new Date(Date.now()) }, profile?.email!) 
+                return '/welcome'   
             }
             
             
