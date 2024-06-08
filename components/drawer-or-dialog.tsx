@@ -1,24 +1,27 @@
-import { Drawer, DrawerClose, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
+import { Drawer, DrawerClose, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerOverlay, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
 import { AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 
-interface DrawerOrDialogProps {
-    trigger: React.ReactNode;
+
+interface BaseProps {
     children: React.ReactNode;
     title: string;
     description?: string;
+}
+interface DrawerOrDialogProps extends BaseProps {
+    trigger?: React.ReactNode;
 }
 
 export default function DrawerOrDialog({ trigger, children, title, description }: DrawerOrDialogProps) {
 
     return (
         <>
-            <div  className="sm:hidden">
+            <div className="sm:hidden">
                 <Drawer>
-                    <DrawerTrigger  className="w-full">
+                    <DrawerTrigger className="w-full">
                         { trigger }
                     </DrawerTrigger>
 
-                    <DrawerContent>
+                    <DrawerContent className="sm:hidden">
                         <DrawerHeader>
                             <DrawerTitle>{title}</DrawerTitle>
                             { 
@@ -38,13 +41,13 @@ export default function DrawerOrDialog({ trigger, children, title, description }
                 </Drawer>
             </div>
 
-            <div  className="max-sm:hidden">
+            <div className="max-sm:hidden">
                 <AlertDialog>
                     <AlertDialogTrigger className="w-full">
                         { trigger }
                     </AlertDialogTrigger>
 
-                    <AlertDialogContent>
+                    <AlertDialogContent className="max-sm:hidden">
                         <AlertDialogHeader>
                             <AlertDialogTitle>{title}</AlertDialogTitle>
                             { 

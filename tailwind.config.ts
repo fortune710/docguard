@@ -74,7 +74,10 @@ const config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
-
+        "caret-blink": {
+          "0%,70%,100%": { opacity: "1" },
+          "20%,50%": { opacity: "0" },
+        },
         "slide": {
           from: { opacity: "0", transform: "translateY(-100px)" },
           to: { opacity: "1", transform: "translateY(0)" }
@@ -103,7 +106,8 @@ const config = {
         "slide-up-500": "slide 1s ease-out 500ms forwards",
         "slide-up-700": "slide 1s ease-out 700ms forwards",
         "slide-down": "reverse-slide 1s ease-out 1.2s forwards",
-        "text-focus-in": "text-focus-in 1s cubic-bezier(0.550, 0.085, 0.680, 0.530)   both"
+        "text-focus-in": "text-focus-in 1s cubic-bezier(0.550, 0.085, 0.680, 0.530)   both",
+        "caret-blink": "caret-blink 1.25s ease-out infinite",
       },
     },
   },

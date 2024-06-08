@@ -45,6 +45,15 @@ model User {
   accounts      Account[]
   documents     Document[]
   sessions      Session[]
+  verificationCode  VerificationCode[]
+}
+
+model VerificationCode {
+  id String @id @default(cuid())
+  user_id String
+  user  User @relation(fields: [user_id], references: [id])
+  code String
+  expires_on DateTime
 }
 
 model Document {

@@ -11,3 +11,5 @@ const validatePassword = (enteredPassword: string, storedPassword: string) => {
     return hashedPassword === storedPassword;
     
 }
+
+export { validatePassword }
