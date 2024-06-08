@@ -19,9 +19,22 @@ const VerifyUser = ({ userEmail, ...props }: VerifyUserProps) => {
     const router = useRouter();
 
     const handleSubmitCode = async () => {
-        const response = await fetch(`/api/verify?code=${code}&user_email=${userEmail}`)
+        const response = await fetch(`/api/verify?code=${code}&user_email=${userEmail}`, {
+            cache: "no-store"
+        })
         if (response.status === 200) {
-            await response.json()
+            const { data, message } = await response.json();
+            if (!data.valid) {
+                return toast({
+                    title: "OTP Error",
+                    description: message,
+                    variant: "destructive"
+                })
+            }
+            toast({
+                title: "OTP Success",
+                description: message
+            })
             return router.push('/welcome')
         }
 
