@@ -102,6 +102,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ type }) => {
         <VerifyUser
           open={!!searchParams.get('unauthorized')}
           userEmail={searchParams.get('email') ?? ''}
+          resetPassword={!!searchParams.get('reset')}
         />
       
       </>
@@ -139,6 +140,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ type }) => {
         <VerifyUser
           open={showVerification.open}
           userEmail={showVerification.email}
+          resetPassword={false}
         />
       </>
     );
