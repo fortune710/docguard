@@ -10,12 +10,24 @@ export const createVerification = async (user_id: string, code: string) => {
         }
     })
 
-    if (!existingVerification || existingVerification.expires_on < new Date()) {   
+    if (!existingVerification) {   
         return await prisma.verificationCode.create({
             data: {
                 code: hashedCode,
                 expires_on: new Date(Date.now() + 10 * 60 * 1000),
                 user_id
+            }
+        })
+    }
+
+    if (existingVerification.expires_on < new Date()) {
+        return await prisma.verificationCode.update({
+            where: {
+                id: existingVerification.id
+            },
+            data: {
+                expires_on: new Date(Date.now() + 10 * 60 * 1000),
+                code: hashedCode,
             }
         })
     }
