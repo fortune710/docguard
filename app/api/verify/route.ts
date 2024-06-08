@@ -15,7 +15,7 @@ export async function GET(req: Request) {
     }
 
     try {
-        const user = await getUserWithEmail(user_email)!
+        const user = await getUserWithEmail(user_email)!;
         const { valid, message } = await checkVerification(user?.id!, otp);
         return Response.json({
             data: { valid },
