@@ -27,12 +27,12 @@ export const checkVerification = async (user_id: string, code: string) => {
         }
     }
 
-    await prisma.user.update({
+    const user = await prisma.user.update({
         where: {
             id: user_id
         },
         data: {
-            emailVerified: new Date()
+            emailVerified: new Date(Date.now())
         }
     })
 
