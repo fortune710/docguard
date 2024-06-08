@@ -7,6 +7,10 @@ import getUser from "@/server/users/getUser";
 
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { prisma } from "@/prisma";
+import getUserWithEmail from "@/server/users/getUserWithEmail";
+import { createVerification } from "@/server/verification/createVerification";
+import { sendVerificationEmail } from "@/services/emails/sendVerificationEmail";
+import { generateOTP } from "@/utils/functions";
 
 const handler = NextAuth({
     adapter: PrismaAdapter(prisma),
@@ -43,7 +47,7 @@ const handler = NextAuth({
         })
     ],
     callbacks: {
-        redirect: ({ url, baseUrl }) => { return url }, 
+        redirect: ({ url }) => { return url }, 
         jwt: async ({ user, token }) => {
             if (user) {
                 return {
@@ -64,6 +68,17 @@ const handler = NextAuth({
             }
         },
         signIn: async ({ user }) => {
+            const fullUser = await getUserWithEmail(user?.email!);
+            if (!fullUser?.emailVerified) {
+                const otp = generateOTP();
+                
+                await Promise.all([
+                    await createVerification(fullUser?.id!, otp),
+                    await sendVerificationEmail(fullUser?.email!, otp)
+                ])           
+                return `/login?unauthorized=true&email=${user?.email!}`
+            }
+
             return true
         }
     },
