@@ -135,7 +135,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ type }) => {
     return (
       <>
         <form
-          className="flex flex-col items-center gap-7"
+          className="flex flex-col items-center gap-7 w-1/3 mx-auto"
           onSubmit={onSubmitHandler}
         >
           <div className="flex flex-col w-full gap-5">
