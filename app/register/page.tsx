@@ -31,8 +31,8 @@ export default function SignUpPage() {
                     and <Link href="/privacy-policy">Privacy Policy</Link>
                 </p>
                 <div className="flex items-center justify-center gap-0.5 font-medium">
-                    <p>Already have an account?</p>
-                    <Link href="/login">Login</Link>
+                    <p>Already have an account?</p> {" "}
+                    <Link className="hover:text-blue-900" href="/login">Login</Link>
                 </div>
             </section>
         </main>
