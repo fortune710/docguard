@@ -12,6 +12,8 @@ import { FaGoogle } from "react-icons/fa6";
 import { sendVerificationEmail } from "@/services/emails/sendVerificationEmail";
 import VerifyUser from "./verify-user";
 import { useSearchParams } from "next/navigation";
+import { emailSchema, nameSchema, passwordSchema } from "@/lib/schema";
+import { ZodError } from "zod";
 
 interface AuthFormProps {
   type: "login" | "sign-up" | "forgot-password";
@@ -30,31 +32,53 @@ const AuthForm: React.FC<AuthFormProps> = ({ type }) => {
   const onSubmitHandler = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    const { email, name, password } = Object.fromEntries(formData.entries());
+    let { email: formEmail, name: formName, password: formPassword } = Object.fromEntries(formData.entries());
 
-    switch (type) {
-      case "login":
-        await signIn("credentials", { email, password, callbackUrl: "/home" });
+    try {
+      const [email, password, name] = await Promise.all([
+        await emailSchema.parseAsync(formEmail),
+        await passwordSchema.parseAsync(formPassword),
+        await nameSchema.parseAsync(formName)
+      ])
+  
+      switch (type) {
+        case "login":
+          await signIn("credentials", { email, password, callbackUrl: "/home" });
+  
+          break;
+        case "sign-up":
+          await fetch("/api/users", {
+            method: "POST",
+            body: JSON.stringify({ name, password, email }),
+            cache: "no-store",
+          });
+          setShowVerification({ open: true, email: email.toString() })
+  
+          toast({
+            title: "Successful Sign Up",
+            description: "Check your email to verify your account",
+          });
+          break;
+        case "forgot-password":
+          break;
+        default:
+          throw Error("Not a valid form prop");
+      }
+    } catch (err: any) {
+      if (err instanceof ZodError) {
+        return err.errors.map((error) => {
+          return toast({
+            title: "Validation Error",
+            description: error.message,
+            variant: "destructive"
+          })
+        })
+      }
 
-        break;
-      case "sign-up":
-        await fetch("/api/users", {
-          method: "POST",
-          body: JSON.stringify({ name, password, email }),
-          cache: "no-store",
-        });
-        setShowVerification({ open: true, email: email.toString() })
-
-        toast({
-          title: "Successful Sign Up",
-          description: "Check your email to verify your account",
-        });
-        break;
-      case "forgot-password":
-        break;
-      default:
-        throw Error("Not a valid form prop");
-        break;
+      return toast({
+        title: "Error",
+        description: err.message ?? "An error occurred while sign up"
+      })
     }
   };
 
@@ -111,7 +135,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ type }) => {
     return (
       <>
         <form
-          className="flex flex-col items-center gap-7"
+          className="flex flex-col items-center gap-7 md:w-2/3 lg:w-1/3 md:mx-auto"
           onSubmit={onSubmitHandler}
         >
           <div className="flex flex-col w-full gap-5">

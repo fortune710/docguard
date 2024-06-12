@@ -1,6 +1,7 @@
 import { Documents } from "@/server/types"
 import { File } from "lucide-react"
 import SearchActions from "./search-actions"
+import LoadingSpinner from "@/components/loading-spinner"
 
 interface SearchResultsProps {
     resultsLoading: boolean,
@@ -12,10 +13,10 @@ const SearchResults = ({ results, resultsLoading }: SearchResultsProps) => {
         <ul className="my-5 space-y-1.5">
             {
                 resultsLoading ? 
-                <>
-                    <li className="mb-3 animate-pulse bg-zinc-200 rounded-md h-12 w-full"/> 
-                    <li className="animate-pulse bg-zinc-200 rounded-md h-12 w-full"/> 
-                </> :
+                <li className="my-1 h-[200px] w-full flex items-center justify-center">
+                    <LoadingSpinner/>
+                </li> 
+                :
                 results?.map((document) => (
                     <li className="grid grid-cols-[30px_auto_30px] items-center gap-3 text-sm font-medium font-inter hover:bg-zinc-200 rounded-md py-2.5 px-3 w-full" key={document.id}>
                         <File className="h-6 w-6"/>

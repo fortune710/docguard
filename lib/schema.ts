@@ -25,3 +25,21 @@ export const SearchQuerySchema = z.object({
         required_error: "Search query not present"
     }).trim()
 })
+
+export const emailSchema = z.string({
+    required_error: "Email is required and cannot be blank",
+}).trim().min(3).email({
+    message: "Email field is not a valid email"
+})
+
+export const passwordSchema = z.string({
+    required_error: "Password is required and cannot be blank"
+}).trim().min(5, {
+    message: "Password must be at least 5 characters"
+})
+
+export const nameSchema = z.string({
+    required_error: "Name is required and cannot be blank"
+}).trim().min(1, {
+    message: "Name must be at least 1 character"
+})

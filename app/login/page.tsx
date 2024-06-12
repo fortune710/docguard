@@ -20,8 +20,8 @@ export default function LoginPage() {
                 <AuthForm type="login"/>
 
                 <div className="flex items-center justify-center gap-0.5 font-medium">
-                    <p>Don&apos;t have an account?</p>
-                    <Link href="/register">Sign Up</Link>
+                    <p>Don&apos;t have an account?</p>{" "}
+                    <Link className="hover:text-blue-900" href="/register">Sign Up</Link>
                 </div>
             </section>
         </main>

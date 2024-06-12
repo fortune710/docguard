@@ -31,7 +31,7 @@ export default function CardDocument({ cardSideKey }: { cardSideKey: string }) {
     if(isLoading) {
         return (
             <Card className="cursor-pointer">
-                <CardContent className="h-[200px] p-0 flex items-center justify-center">
+                <CardContent className="h-[180px] p-0 flex items-center justify-center">
                     <Image 
                         src="/loading-spinner.svg" 
                         alt="Loading Spinner" 
@@ -48,7 +48,7 @@ export default function CardDocument({ cardSideKey }: { cardSideKey: string }) {
     if(!url) {
         return (
             <Card className="cursor-pointer">
-                <CardContent className="h-[200px] p-0 flex items-center justify-center">
+                <CardContent className="h-[180px] p-0 flex items-center justify-center">
                     <p className="text-sm">No Card Side</p>
                 </CardContent>
             </Card>
@@ -57,7 +57,7 @@ export default function CardDocument({ cardSideKey }: { cardSideKey: string }) {
     
     return (
         <Card>
-            <CardContent className="h-[200px] p-0">
+            <CardContent className="h-[180px] p-0">
                 <img 
                     src={url} 
                     alt="Card Side" 

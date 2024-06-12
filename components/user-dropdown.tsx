@@ -26,7 +26,7 @@ export default function UserDropdown({ image, name }: UserDropdownProps) {
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                     <Button variant="secondary" size="icon" className="rounded-full">
-                        <Avatar>
+                        <Avatar className="max-md:w-12 max-md:h-12">
                             <AvatarImage src={image!} alt="Your Profile Picture"/>
                             <AvatarFallback>{name?.at(0)!}</AvatarFallback>
                         </Avatar>
