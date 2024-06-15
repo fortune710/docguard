@@ -9,7 +9,6 @@ import { FormEvent, useState } from "react";
 import { Button } from "./ui/button";
 import { useToast } from "./ui/use-toast";
 import { FaGoogle } from "react-icons/fa6";
-import { sendVerificationEmail } from "@/services/emails/sendVerificationEmail";
 import VerifyUser from "./verify-user";
 import { useSearchParams } from "next/navigation";
 import { emailSchema, nameSchema, passwordSchema } from "@/lib/schema";
@@ -21,13 +20,16 @@ interface AuthFormProps {
 
 const defaultVerificationState = {
   open: false,
-  email: ""
+  email: "",
+  reset: false
 }
 
 const AuthForm: React.FC<AuthFormProps> = ({ type }) => {
   const { toast } = useToast();
   const [showVerification, setShowVerification] = useState(defaultVerificationState);
   const searchParams = useSearchParams();
+  const moveToWelcome = searchParams.get('next') === 'welcome';
+
   
   const onSubmitHandler = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -35,24 +37,42 @@ const AuthForm: React.FC<AuthFormProps> = ({ type }) => {
     let { email: formEmail, name: formName, password: formPassword } = Object.fromEntries(formData.entries());
 
     try {
-      const [email, password, name] = await Promise.all([
-        await emailSchema.parseAsync(formEmail),
-        await passwordSchema.parseAsync(formPassword),
-        await nameSchema.parseAsync(formName)
-      ])
-  
+      
       switch (type) {
         case "login":
-          await signIn("credentials", { email, password, callbackUrl: "/home" });
-  
+          let [loginEmail, loginPassword] = await Promise.all([
+            await emailSchema.parseAsync(formEmail),
+            await passwordSchema.parseAsync(formPassword),
+          ])    
+          const res = await signIn("credentials", { 
+            email: loginEmail, 
+            password: loginPassword, 
+            callbackUrl: !moveToWelcome ? "/home" : "/welcome",
+             
+          });
+
+          if (!!searchParams.get('error')) {
+            return toast({
+              title: "Sign In Error",
+              description: searchParams.get('error') || "An error occurred",
+              variant: "destructive"
+            })
+          }
+          
           break;
         case "sign-up":
+          let [signUpEmail, signUpPassword, name] = await Promise.all([
+            await emailSchema.parseAsync(formEmail),
+            await passwordSchema.parseAsync(formPassword),
+            await nameSchema.parseAsync(formName)
+          ])
+
           await fetch("/api/users", {
             method: "POST",
-            body: JSON.stringify({ name, password, email }),
+            body: JSON.stringify({ name, password: signUpPassword, email: signUpEmail }),
             cache: "no-store",
           });
-          setShowVerification({ open: true, email: email.toString() })
+          setShowVerification({ open: true, email: signUpEmail, reset: false })
   
           toast({
             title: "Successful Sign Up",
@@ -60,7 +80,18 @@ const AuthForm: React.FC<AuthFormProps> = ({ type }) => {
           });
           break;
         case "forgot-password":
-          break;
+
+        let [forgotPasswordEmail] = await Promise.all([
+          await emailSchema.parseAsync(formEmail)
+        ])
+
+        await fetch("/api/users/forgot", {
+          method: "POST",
+          body: JSON.stringify({ email: forgotPasswordEmail }),
+          cache: "no-store",
+        });
+
+        return setShowVerification({ open: true, email: forgotPasswordEmail, reset: true })
         default:
           throw Error("Not a valid form prop");
       }
@@ -168,6 +199,40 @@ const AuthForm: React.FC<AuthFormProps> = ({ type }) => {
         />
       </>
     );
+  }
+
+  else if (type === "forgot-password") {
+    return (
+      <>
+        <form
+          className="flex flex-col items-center gap-7"
+          onSubmit={onSubmitHandler}
+        >
+          <div className="flex flex-col w-full gap-5">
+
+            <div>
+              <label>Email</label>
+              <Input
+                placeholder="name@example.com"
+                type="email"
+                name="email"
+                className="h-11"
+              />
+            </div>
+
+          </div>
+
+          <Button className="w-full text-lg h-12">Confirm Email</Button>
+        </form>
+      
+        <VerifyUser
+          open={showVerification.open}
+          userEmail={showVerification.email}
+          resetPassword={showVerification.reset}
+        />
+
+      </>
+    )
   }
 };
 

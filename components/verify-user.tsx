@@ -13,7 +13,7 @@ interface VerifyUserProps {
     open: boolean,
     onOpenChange?: (open: boolean) => any,
     userEmail: string,
-    resetPassword: boolean
+    resetPassword: boolean,
 }
 
 const VerifyUser = ({ userEmail, resetPassword, ...props }: VerifyUserProps) => {
@@ -23,7 +23,7 @@ const VerifyUser = ({ userEmail, resetPassword, ...props }: VerifyUserProps) => 
     const router = useRouter();
     const [verified, setVerified] = useState(false);
 
-    const moveToWelcome = () => router.push('/welcome')
+    const moveToWelcome = () => router.push('/login?next=welcome')
 
     const handleSubmitCode = async () => {
         const response = await fetch(`/api/verify?code=${code}&user_email=${userEmail}`, {
