@@ -1,8 +1,8 @@
 import { prisma } from "@/prisma"
-import { User } from "../types";
+import { TUpdateUser } from "../types";
 
 
-const updateUser = async (updatedUser: Partial<User>, email?: string, id?: string) => {
+const updateUser = async (updatedUser: Partial<TUpdateUser>, email?: string, id?: string) => {
     const user = await prisma.user.update({
         where: { id, email },
         data: {

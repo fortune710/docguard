@@ -14,7 +14,7 @@ export default function LoginPage() {
                     className="mx-auto mb-4"
                 />
                 <h1 className="text-3xl font-semibold">Forgot Password?</h1>
-                <p>Enter the email for your account and we'll help you out</p>
+                <p>Enter the email for your account and we&apos;ll help you out</p>
             </div>
             <section className="flex flex-col gap-6 my-4">
                 <AuthForm type="forgot-password"/>
