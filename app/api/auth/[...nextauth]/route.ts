@@ -35,7 +35,7 @@ const handler = NextAuth({
             authorize: async (credentials, req) => {
                 //Will Peform Validation of Password Here
                 const user = await getUser(credentials?.email!)! as User;
-                if (!user) return null
+                if (!user) throw Error("User with email does not exist")
                 return user
             },
             
@@ -72,10 +72,12 @@ const handler = NextAuth({
             
             if (!profile) { //This means user used credentials to sign in
                 const otp = generateOTP();
+                /*
                 if (!fullUser?.password) {
                     await sendVerificationEmail(fullUser?.email!, otp)
                     return `/login?unauthorized=true&email=${user?.email}&reset=true`
                 }
+                */
                 
                 if (!fullUser?.emailVerified) {
                     
