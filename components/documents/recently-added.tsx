@@ -5,6 +5,8 @@ import { cache } from "react";
 import findUsersRecentlyAdded from "@/server/documents/findUsersRecentlyAdded";
 import { getUserFromSession } from "@/server/session";
 import DocumentsTable from "./documents-table";
+import { Button } from "../ui/button";
+import FileUploadDrawer from "../home/file-upload-drawer";
 
 export default async function RecentlyAddedDocuments() {
     const user = await getUserFromSession();
@@ -21,7 +23,22 @@ export default async function RecentlyAddedDocuments() {
             </CardHeader>
 
             <CardContent>
-                <DocumentsTable documents={recentlyAdded}/>
+                {
+                    recentlyAdded.length < 1 ?
+                    <div className="w-full flex flex-col items-center p-16 gap-3">
+                        <p className="font-medium text-xl">You have not added any documents</p>
+                        <FileUploadDrawer
+                            uploadFileButton={
+                                <Button>
+                                    Create New Document
+                                </Button>
+                            }
+                            userId={user?.id!}
+                        />
+                    </div>
+                    :
+                    <DocumentsTable documents={recentlyAdded}/>
+                }
             </CardContent>
         </Card>
     )
