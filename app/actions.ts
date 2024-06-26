@@ -2,7 +2,6 @@
 
 import createNewDocument from "@/server/documents/createNewDocument";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 import uploadFile from "@/services/gcp-storage/uploadFile";
 import { ImageUploadData } from "@/types";
 import createNewCard from "@/server/card/createNewCard";
@@ -10,7 +9,6 @@ import updateDocument from "@/server/documents/updateDocument";
 import deleteDocument from "@/server/documents/deleteDcoument";
 
 import { DocumentsSchema } from "@/lib/schema";
-import getUserWithEmail from "@/server/users/getUserWithEmail";
 import hashPassword from "@/server/users/hashPassword";
 import updateUser from "@/server/users/updateUser";
 
