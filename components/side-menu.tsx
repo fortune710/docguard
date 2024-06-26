@@ -1,22 +1,17 @@
+'use client'
 import Link from "next/link"
 import {
   Bell,
   Home,
   Inbox,
   LibraryBig,
-  LineChart,
-  Package,
-  Package2,
   ScanLine,
   Settings,
-  ShoppingCart,
-  Users,
 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
-import { headers } from "next/headers";
-import { getUserFromSession } from "@/server/session";
+import { usePathname, useRouter } from "next/navigation"
 
 
 function getLinkClass(currentRoute: string, linkRoute: string) {
@@ -27,10 +22,16 @@ function getLinkClass(currentRoute: string, linkRoute: string) {
     return baseClass;
 }
 
-export default async function SideMenu() {
-    const route = headers().get('next-url')!;
+interface SideMenuProps {
+    userId: string
+}
 
-    const user = await getUserFromSession();
+export default function SideMenu({ userId }: SideMenuProps) {
+    const route = usePathname()
+    const router = useRouter()
+
+    const moveToInbox = () => router.push('/inbox')
+
 
 
     return (
@@ -45,7 +46,7 @@ export default async function SideMenu() {
                             height={25}
                         />
                     </Link>
-                    <Button variant="outline" size="icon" className="ml-auto h-8 w-8">
+                    <Button onClick={moveToInbox} variant="outline" size="icon" className="ml-auto h-8 w-8">
                         <Bell className="h-4 w-4" />
                         <span className="sr-only">Toggle notifications</span>
                     </Button>
@@ -67,7 +68,7 @@ export default async function SideMenu() {
                             Documents
                         </Link>
                         <Link
-                            href={`/scan?user_id=${user?.id!}`}
+                            href={`/scan?user_id=${userId}`}
                             className={getLinkClass(route, 'scan')}
                         >
                             <ScanLine className="h-4 w-4" />
@@ -83,7 +84,6 @@ export default async function SideMenu() {
                         </Link>
                         <Link
                             href="/settings"
-                            aria-disabled={true}
                             className={getLinkClass(route, 'settings')}
                         >
                             <Settings className="h-4 w-4" />

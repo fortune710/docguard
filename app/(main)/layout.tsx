@@ -13,6 +13,8 @@ import DesktopHeader from "@/components/desktop-header";
 import { Home, Inbox } from "lucide-react";
 import Link from "next/link";
 import { Separator } from "@/components/ui/separator";
+import { getUserFromSession } from "@/server/session";
+
 
 export const metadata: Metadata = {
     title: 'Your Dashboard',
@@ -20,15 +22,17 @@ export const metadata: Metadata = {
 }
 
 
-export default function HomeLayout({ children }: {
+export default async function HomeLayout({ children }: {
     children: React.ReactNode
 }) {
 
     const route = headers().get('next-url')!;
+    const user = await getUserFromSession();
+
 
     return (
         <div className={`${urbanist.className} max-sm:pt-5 relative h-[100dvh] md:grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]`}>
-            <SideMenu/>
+            <SideMenu userId={user?.id!}/>
             
             <div>
                 <DesktopHeader/>
